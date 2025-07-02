@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ابحث توافقات</title>
+<style>
+  body {
+    background-color: #eef1f5;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Cairo', sans-serif, Tahoma, sans-serif;
+  }
+
+  .search-container {
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    padding: 25px 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  input[type="text"], button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+
+  input[type="text"] {
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+  }
+
+  button {
+    border: none;
+    background-color: #28a745;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  button:hover {
+    background-color: #218838;
+  }
+
+  .results {
+    margin-top: 30px;
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .group {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+
+  .group h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+    font-weight: bold;
+    animation: blink 3s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { color: #333; }
+    50% { color: #007bff; }
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: 20px;
+  }
+
+  li.highlight {
+    background-color: yellow;
+  }
+
+  footer {
+    width: 100%;
+    background-color: #000000;
+    color: #f1f1f1;
+    text-align: center;
+    padding: 15px 10px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif;
+    z-index: 999;
+  }
+  footer small {
+    font-size: 9px;
+    display: block;
+    margin-top: 5px;
+    font-weight: normal;
+  }
+</style>
+</head>
+<body>
+
+<div class="search-container">
+  <input type="text" id="searchInput" placeholder="اكتب اسـم أو رقم الموديل الهاتــف بل الكامـــل" oninput="searchCompatibility()" autocomplete="off"/>
+
+
+<div id="results" class="results" style="display:none;"></div>
+
+<footer>
+  رحمه الله من قرأ سورة الفاتحة إلى روح المرحوم السيد علي طرويل راضي الموسوي
+  <small>الموقع غير مسؤول عن أي ضرر مباشر أو غير مباشر ناتج عن استخدام المحتوى أو الاعتماد عليه</small>
+</footer>
+
+<script>
+const compatibilityGroups = [
+ 
+  {
+    devices: [
+      "SPARK GO 2023     (BF7)",
+      "itel P40          (P662L)",
+      "POP 7 PRO 2023    (X)",
+      "SMART 7 HD        (X6516)",
+      "SMART 7           (X6515)",
+      "SPARK 10          (KI5q)",
+      "SPARK 10C         (KI5K)",
+      "itel A50          (A667LP-MB)",
+      "itel A50s         (X)",
+      "itel A60          (A662L)",
+      "itel A60s         (X)",
+      "itel A70          (A665L)",
+      "itel A05s         (A663LC)"
+    ]
+  },
+  {
+    devices: [
+      "Samsung A11         (SM-A115)",
+      "Samsung M11         (SM-M115)"
+    ]
+  },
+  {
+    devices: [
+      "Samsung A12                 (SM-A125F)",
+      "Samsung A02                 (SM-A022F/DS)",
+      "Samsung M02                 (SM-M022F .SM-M022F/DS )",
+      "Samsung F12                 (F127F)",
+      "Samsung A32 5G              (SM-A326U .SM-A326UZKNTMB)",
+      "Samsung M32 5G             (SM-M326B)",
+      "(عالمي) Samsung M12        (SM-M127F, SM-M127F/DSN, SM-M127N)"
+    ]
+  },
+  {
+    devices: [
+      "Hot 30i              (X669)",
+      "POP 7                (BF6) ",
+      "SMART 7 Plus         (X6517)",
+      "itel S24             (S667LN)",
+      "itel P55 5G          (A666LN)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK 9 PRO           (KH7)", 
+      "HOT 11                (X675)",
+      "SPARK 8T              (KG6p)",
+      "SPARK 8P              (KG7H)",
+      "SPARK 8 Plus         (X6526)",
+      "itel Vision 5 Plus   (S662LCN)",
+      "itel S18 PRO        (S662L)"
+    ]
+  },
+  {
+    devices: [
+      "camon 19               (CI6n-EB)",
+      "camon 19 pro           (CI8 .CI8n)"
+    ]
+  },
+  {
+    devices: [
+      "CAMON 19 Neo            (X)",
+      "CAMON 18                (CH6N)",
+      "CAMON 18P               (CH7)",
+      "CAMON 18T               (X)",
+      "SPARK 8 PRO             (KG8, MZ-TECNO KG8, Mobile KG8)",
+      "HOT 11s                (X6812)",
+      "POVA Neo 5G            (LE6)",
+      "HOT 20s               (X6827)",
+      "HOT 20 PRO             (X6827)",
+      "ZERO 5G 2023          (X6815C, X6815D)",
+      "CAMON 17              (CG6J)",
+      "CAMON 17 PREMIER      (X)"
+    ]
+  },
+  {
+    devices: [
+      "CAMON 15          (CD7)",
+      "CAMON 15 Air       (CD6, CD6S)",
+      "INFINIX HOT 9     (X655C .X655 .X655D)",
+      "HOT 9 PRO        (X655F)",
+      "SPARK 5          (KE5 . KD7S)",
+      "SPARK 5 PRO       (KD7)",
+      "Note 7 Lite     (X656)",
+      "INFINIX S5      (X652)",
+      "INFINIXS5 Lite   (X652B)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK 8      (KG6 )",
+      "itel A49     (A661L)",
+      "itel A58     (A661 . A661W .A661WP)",
+      "A58 PRO      (A661L)",
+      "S17          (S661W)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK 4 Air         (MT6761)",
+      "SPARK GO 2019      (KC1)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK 9          (KG5P)",
+      "SPARK 9T         (KH6)",
+      "SPARK 8C        (KG5k. KG5j. KG5n. MZ-TECNO KG5k)",
+      "itel Vision 3   (S661LP)",
+      "SPARK GO 2023   (BF7N)",
+      "SMART 7       (X6515)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK GO 1 2024   (NOTHING)",
+      "POP 9 5G           (KL4)",
+      "SPARK 30 5G        (KL8)",
+      "SPARK 30C          (KL5-OS)",
+      "HOT 50 5G        (X6720)",
+      "HOT 50i         (X6531B)",
+      "SMART 9        (X6532)",
+      "itel P65 Plus  (NOTHING)",
+      "itel P65      (P651L .P651LW)",
+      "itel A80           (A671LC)"
+    ]
+  },
+  {
+    devices: [
+      "HOT 9 Play            (X680 .X689B .X680C .X680E .X680F)",
+      "SMART 4 PLES          (X680D)"
+    ]
+  },
+  {
+    devices: [
+      "SMART 8           (5625)",
+      "SMART 8 HD        (6525)",
+      "SMART 8 PRO       (X6525B)",
+      "SMART 8 Plus      (X6526)",
+      "HOT 40i           (X6528B)",
+      "SPARK GO 2024     (GB6)",
+      "SPARK 20          (KJ5N)",
+      "SPARK 20C         (BG7N .GB .8GB )",
+      "POP 8             (5025D .BB2 )",
+      "itel P55 Plus     (P663LN .P663L)",
+      "itel P55         (A666LN-AB)",
+      "itel P55T         (P665L)",
+      "MOTOROLA POWER 50 (NOTHING)",
+      "itel A70s         (A665L-128G-SB)",
+      "itel S24          (S667LN)",
+      "itel RS4          (RS4)",
+      "ZTE Blade A34     (NOTHING)",
+      "ZTE Blade A54     (12343081058)"
+    ]
+  },
+  {
+    devices: [
+      "SMART 4          (X653)",
+      "SMART 4C         (X653)",
+      "SPARK 4 Lite     (KC8S)",
+      "POP 3 Plus      (BB4)",
+      "SPARK GO Plus  (BB4K)"
+    ]
+  },
+  {
+    devices: [
+      "pop 6 pro   (BE8)",
+      "Hot 12 pro  (X668C)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK GO 2022 (KG5 .KG5F .K5GM)",
+      "POP 5 PRO    (BD4J .BD4H)",
+      "POP 5 Lite   (BD4)",
+      "SMART 6       (X657B)"
+    ]
+  },
+  {
+    devices: [
+      "SPARK 7      ( KF6 )",
+      "SMART 5 PRO  (NOTHING)",
+      "HOT 10i     (X659B . PR652B . X658E .PR652C . X658B . X659 )",
+      "SPARK 7T    (KF60)",
+      "POP 5P      (BD3)",
+      "itel P37   (NOTHING)"
+    ]
+  },
+  {
+    devices: [
+      "HOT 12           (X6817)",
+      "HOT 12 Play     (X6816)",
+      "HOT 12 Play NFC  (X6816D)",
+      "POVA NEO 2       (LG6N)",
+      "POVA NEO 3       (LH6N)",
+      "POVA 4            (LG7N)",
+      "NOTE 12 I         (X6819)",
+      "HOT 20           (X6826)",
+      "HOT 20 Play      (X6825)",
+      "HOT 30 Play     (X6835B .X6835)",
+      "itel P40 Plus    (some models)"
+    ]
+  },
+  {
+    devices: [
+      "CAMON 16     (CE7, CE7j, CE9h, MZ-TECNO CE7j)",
+      "SPARK 6 2020 (KE7)",
+      "POVA        (LD7, LD7j, MZ-TECNO LD7)",
+      "NOTE 8i     (X683)",
+      "Note 10i    (X659B, PR652B, X658E, PR652C, X658B, X659)",
+      "HOT 10      (X682B, X682C, MZ-Infinix X682B, MZ-Infinix X682C)"
+    ]
+  },
+  {
+    devices: [
+      "NOTE 30               (X6833B .X6716B)",
+      "HOT 30                (NFC X6831)",
+      "SPARK 10 PRO         (KI7)",
+      "POVA 5              (LH7n,)",
+      "POVA 5 PRO 5G       (LH8n)"
+    ]
+  },
+  {
+    devices: [
+      "HOT 40X 5G        (X6838)",
+      "HOT 40           (X6836)",
+      "HOT 40 PRO       (X6837)",
+      "SPARK 20 PRO     (KJ6-MB)",
+      "POVA 6 Neo      (X)",
+      "Note 40X 5G     (X6838)"
+    ]
+  },
+  {
+    devices: [
+      "Note 40 PRO       (X6851)",
+      "NOTE 40 PRO Plus   (X6851B)",
+      "SPARK 20 PRO Plus   (KJ7)",
+      "itel S25 Ultra     (S686ln)",
+      "Zero 40 Ultra     (X6861)",
+      "HOT 50 PRO Plus   ()"
+    ]
+  }
+];
+
+
+function searchCompatibility() {
+  const query = document.getElementById("searchInput").value.trim().toLowerCase();
+  const resultsDiv = document.getElementById("results");
+
+  if (!query) {
+    resultsDiv.style.display = "none";
+    resultsDiv.innerHTML = "";
+    return;
+  }
+
+  const matchedGroups = compatibilityGroups.filter(group =>
+    group.devices.some(device => device.toLowerCase().includes(query))
+  );
+
+  resultsDiv.style.display = "block";
+
+  if (matchedGroups.length === 0) {
+    resultsDiv.innerHTML = "<p>ماكو نتائج مطابقة.</p>";
+    return;
+  }
+
+  let html = "";
+  matchedGroups.forEach(group => {
+    html += `<div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>`;
+    group.devices.forEach((device, index) => {
+      // نضلل أول جهاز فقط من أول مجموعة تطابق
+      const highlightClass = (matchedGroups.indexOf(group) === 0 && index === 0) ? "highlight" : "";
+      html += `<li class="${highlightClass}">${device}</li>`;
+    });
+    html += `</ul></div>`;
+  });
+
+  resultsDiv.innerHTML = html;
+}
+
+</script>
+<script src="search.js"></script>
+</body>
+</html>
