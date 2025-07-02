@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <title>فاتورة</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  
+  <link rel="stylesheet" href="styles.css">
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -66,6 +68,13 @@
       .btn-container {
         display: none;
       }
+    }
+    /* لإظهار وقت التحديث بشكل جميل داخل الفاتورة */
+    #updateTimeDisplay {
+      margin-top: 5px;
+      font-weight: normal;
+      color: #555;
+      font-size: 14px;
     }
   </style>
 </head>
@@ -144,6 +153,26 @@
         <input type="text" id="price" placeholder="دينار عراقي">
       </div>
 
+      <!-- مدة الضمان -->
+      <div class="form-group">
+        <label>مدة الضمان:</label>
+        <select id="warrantyPeriod">
+         <option value="موقعي"موقعي > </option>
+          <option value="5 أيام">5 أيام</option>
+          <option value="10 أيام">10 أيام</option>
+          <option value="15 يوم">15 يوم</option>
+          <option value="20 يوم">20 يوم</option>
+          <option value="30 يوم">30 يوم</option>
+        </select>
+      </div>
+
+      <!-- وقت التحديث -->
+      <div class="form-group">
+        <label>  التاريخ والساعـــة</label>
+        <input type="datetime-local" id="updateTime">
+        <div id="updateTimeDisplay"></div>
+      </div>
+
       <div class="form-group" style="width: 100%;">
         <label>الملاحظات:</label>
         <textarea id="notes" placeholder="أدخل الملاحظات هنا..."></textarea>
@@ -155,6 +184,9 @@
     <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
     <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
   </div>
+
+  <!-- مكتبة html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     const models = {
@@ -183,6 +215,24 @@
       });
     });
 
+    // تحديث عرض وقت التحديث بصيغة عربية مقروءة
+    const updateTimeInput = document.getElementById('updateTime');
+    const updateTimeDisplay = document.getElementById('updateTimeDisplay');
+
+    updateTimeInput.addEventListener('change', () => {
+      const dt = new Date(updateTimeInput.value);
+      if (!isNaN(dt.getTime())) {
+        // صيغة عربية بسيطة للتاريخ والوقت
+        const options = { 
+          year: 'numeric', month: 'long', day: 'numeric', 
+          hour: '2-digit', minute: '2-digit', hour12: false 
+        };
+        updateTimeDisplay.textContent = dt.toLocaleDateString('ar-EG', options);
+      } else {
+        updateTimeDisplay.textContent = '';
+      }
+    });
+
     function printInvoice() {
       const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
       const originalTitle = document.title;
@@ -193,14 +243,29 @@
 
     function saveAsPDF() {
       const element = document.getElementById("invoice");
+      const device = document.getElementById("deviceInput").value.trim() || "جهاز";
       const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
+      const filename = device + " " + serial + ".pdf";
+
       const opt = {
-        margin:       0.5,
-        filename:     serial + '.pdf',
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2 },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.7 },
+        html2canvas: { scale: 1 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
       };
+
+      html2pdf().set(opt).from(element).save();
+    }
+  </script>
+
+  <a href="totel.html" class="screen-compatibility-link">توافق الشاشات</a>
+
+  <script src="search.js"></script>
+
+</body>
+</html>
+
       html2pdf().set(opt).from(element).save();
     }
   </script>
