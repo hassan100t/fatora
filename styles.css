@@ -1,0 +1,21 @@
+a[href="totel.html"] {
+  display: block;           /* يخليه عنصر كتلة عشان نقدر نستخدم margin auto */
+  width: fit-content;       /* عرض المحتوى فقط */
+  margin: 20px auto;        /* مركز أفقياً ومسافة فوق وتحت */
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+  transition: background-color 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+}
+
+a[href="totel.html"]:hover {
+  background-color: #0056b3;
+}
