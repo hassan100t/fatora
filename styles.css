@@ -1,21 +1,23 @@
+/* تنسيق الرابط اللي href مالته "totel.html" */
 a[href="totel.html"] {
   display: block;           /* يخليه عنصر كتلة عشان نقدر نستخدم margin auto */
   width: fit-content;       /* عرض المحتوى فقط */
-  margin: 20px auto;        /* مركز أفقياً ومسافة فوق وتحت */
-  background-color: #007BFF;
-  color: white;
-  padding: 10px 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 18px;
-  font-family: 'Arial', sans-serif;
-  transition: background-color 0.3s ease;
-  text-align: center;
-  cursor: pointer;
+  margin: 20px auto;        /* يوسّطه أفقياً ويعطيه مسافة فوق وتحت */
+  background-color: #007BFF; /* لون خلفية أزرق */
+  color: white;              /* لون النص أبيض */
+  padding: 10px 25px;        /* حشوة داخلية لراحة العرض */
+  border-radius: 8px;        /* حواف دائرية */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* ظل خفيف */
+  font-weight: bold;         /* خط عريض */
+  text-decoration: none;     /* إزالة الخط تحت النص */
+  font-size: 18px;           /* حجم الخط */
+  font-family: 'Arial', sans-serif; /* نوع الخط */
+  transition: background-color 0.3s ease; /* تأثير تدرج عند التغيير */
+  text-align: center;        /* توسيط النص داخل الرابط */
+  cursor: pointer;           /* شكل المؤشر اليدوي عند المرور */
 }
 
+/* تأثير عند تمرير الماوس على الرابط */
 a[href="totel.html"]:hover {
-  background-color: #0056b3;
+  background-color: #0056b3; /* لون أزرق أغمق */
 }
