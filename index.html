@@ -7,13 +7,6 @@
   <link rel="stylesheet" href="styles.css">
 
   <style>
-
-      .center-text {
-      text-align: center;
-      font-size: 24px; /* حجم الخط اختياري */
-    }
-
-    
     body {
       font-family: Arial, sans-serif;
       background: #fff;
@@ -264,10 +257,31 @@
 
       html2pdf().set(opt).from(element).save();
     }
+    <div class="center-text" >
+  توافق الشاشات
+</div>
+
   </script>
 
   <a href="totel.html" class="screen-compatibility-link">توافق الشاشات</a>
+
   <script src="search.js"></script>
+
+
+
+
+
+  <head>
+  <style>
+    .full-center {
+      display: flex;
+      justify-content: center;  /* توسيط أفقي */
+      align-items: center;      /* توسيط عمودي */
+      height: 100vh;            /* ارتفاع الصفحة كامل */
+      font-size: 24px;
+    }
+  </style>
+</head>
 
 </body>
 </html>
