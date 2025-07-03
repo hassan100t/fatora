@@ -4,9 +4,19 @@
   <meta charset="UTF-8" />
   <title>فاتورة</title>
   
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="">
 
   <style>
+
+
+    
+
+
+
+
+
+
+
     body {
       font-family: Arial, sans-serif;
       background: #fff;
@@ -76,6 +86,21 @@
       color: #555;
       font-size: 14px;
     }
+
+
+
+
+    
+    .center-text {
+      font-size: 28px;
+      font-weight: bold;
+      color: #007BFF;
+      background: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  
   </style>
 </head>
 <body>
@@ -181,10 +206,11 @@
   </div>
 
   <div class="btn-container">
-    <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
-    <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
-  </div>
-
+  <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
+  <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
+  <a href="totel.html" class="btn link-btn">📱 توافق الشاشات</a>
+</div>
+ 
   <!-- مكتبة html2pdf -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
@@ -257,18 +283,20 @@
 
       html2pdf().set(opt).from(element).save();
     }
+ 
+
   </script>
 
-  <a href="totel.html" class="screen-compatibility-link">توافق الشاشات</a>
+  <a href="totel.html" class="screen-compatibility-link"></a>
 
   <script src="search.js"></script>
 
-</body>
-</html>
 
-      html2pdf().set(opt).from(element).save();
-    }
-  </script>
+
+
+  
+  
+
 
 </body>
 </html>
