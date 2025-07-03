@@ -15,6 +15,8 @@
 
 
 
+
+
     body {
       font-family: Arial, sans-serif;
       background: #fff;
@@ -295,135 +297,6 @@
   
   
 
-
-</body>
-</html>
-tyPeriod">
-         <option value="موقعي"موقعي > </option>
-          <option value="5 أيام">5 أيام</option>
-          <option value="10 أيام">10 أيام</option>
-          <option value="15 يوم">15 يوم</option>
-          <option value="20 يوم">20 يوم</option>
-          <option value="30 يوم">30 يوم</option>
-        </select>
-      </div>
-
-      <!-- وقت التحديث -->
-      <div class="form-group">
-        <label>  التاريخ والساعـــة</label>
-        <input type="datetime-local" id="updateTime">
-        <div id="updateTimeDisplay"></div>
-      </div>
-
-      <div class="form-group" style="width: 100%;">
-        <label>الملاحظات:</label>
-        <textarea id="notes" placeholder="أدخل الملاحظات هنا..."></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="btn-container">
-    <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
-    <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
-  </div>
-
-  <!-- مكتبة html2pdf -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
-  <script>
-    const models = {
-      Samsung: ["Galaxy S23", "Galaxy A54", "Galaxy Note 20"],
-      Apple: ["iPhone 13", "iPhone 12", "iPhone SE"],
-      Huawei: ["P50 Pro", "Nova 9", "Mate 40"],
-      Xiaomi: ["Redmi Note 11", "Mi 11", "Poco X3"],
-      Oppo: ["Reno 8", "A96", "Find X5"],
-      Realme: ["Realme 9", "GT Neo", "C35"],
-      Infinix: ["Hot 12", "Note 11", "Zero X"],
-      TECNO: ["Camon 19", "Spark 10", "Pova 5"],
-      Nokia: ["Nokia G21", "Nokia X10", "Nokia 5.4"],
-      Lenovo: ["K12", "Legion Duel", "Z6 Pro"],
-      Sony: ["Xperia 1 III", "Xperia 10", "Xperia L4"],
-    };
-
-    document.getElementById("companyInput").addEventListener("input", function() {
-      const value = this.value;
-      const list = models[value] || [];
-      const deviceList = document.getElementById("deviceList");
-      deviceList.innerHTML = "";
-      list.forEach(model => {
-        const option = document.createElement("option");
-        option.value = model;
-        deviceList.appendChild(option);
-      });
-    });
-
-    // تحديث عرض وقت التحديث بصيغة عربية مقروءة
-    const updateTimeInput = document.getElementById('updateTime');
-    const updateTimeDisplay = document.getElementById('updateTimeDisplay');
-
-    updateTimeInput.addEventListener('change', () => {
-      const dt = new Date(updateTimeInput.value);
-      if (!isNaN(dt.getTime())) {
-        // صيغة عربية بسيطة للتاريخ والوقت
-        const options = { 
-          year: 'numeric', month: 'long', day: 'numeric', 
-          hour: '2-digit', minute: '2-digit', hour12: false 
-        };
-        updateTimeDisplay.textContent = dt.toLocaleDateString('ar-EG', options);
-      } else {
-        updateTimeDisplay.textContent = '';
-      }
-    });
-
-    function printInvoice() {
-      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
-      const originalTitle = document.title;
-      document.title = serial;
-      window.print();
-      document.title = originalTitle;
-    }
-
-    function saveAsPDF() {
-      const element = document.getElementById("invoice");
-      const device = document.getElementById("deviceInput").value.trim() || "جهاز";
-      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
-      const filename = device + " " + serial + ".pdf";
-
-      const opt = {
-        margin: 0.5,
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.7 },
-        html2canvas: { scale: 1 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      html2pdf().set(opt).from(element).save();
-    }
-    <div class="center-text" >
-  توافق الشاشات
-</div>
-
-  </script>
-
-  <a href="totel.html" class="screen-compatibility-link">توافق الشاشات</a>
-
-  <script src="search.js"></script>
-
-
-
-
-
-  <head>
-  <style>
-    .full-center {
-      display: flex;
-      justify-content: center;  /* توسيط أفقي */
-      align-items: center;      /* توسيط عمودي */
-      height: 100vh;            /* ارتفاع الصفحة كامل */
-      font-size: 24px;
-    }
-  </style>
-</head>
 
 </body>
 </html>
