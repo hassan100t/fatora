@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الفواتير المتكامل</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff7b00;
+            --secondary-color: #fff5eb;
+            --accent-color: #ff9800;
+            --danger-color: #f44336;
+            --success-color: #4CAF50;
+            --save-color: #2196F3;
+            --clear-color: #607d8b;
+            --download-color: #673AB7;
+            --pdf-color: #E91E63;
+            --text-color: #333;
+            --border-color: #ddd;
+            --discount-color: #9c27b0;
+            --footer-color: #f8f9fa;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .top-prayer {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            text-align: center;
+            padding: 10px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .bottom-prayer {
+            background-color: var(--footer-color);
+            color: black;
+            text-align: center;
+            padding: 15px 0;
+            font-size: 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            flex: 1;
+        }
+        
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        #system-title {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .title-input-container {
+            width: 100%;
+            max-width: 500px;
+            margin-top: 15px;
+        }
+        
+        .title-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            font-size: 1rem;
+            text-align: center;
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease;
+        }
+        
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .header-details {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .invoice-date, .live-time {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+        
+        .invoice-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 30px;
+            white-space: nowrap;
+        }
+        
+        .invoice-number-input {
+            border: 1px solid var(--primary-color);
+            padding: 5px 10px;
+            width: 80px;
+            text-align: center;
+            border-radius: 15px;
+            margin-right: 5px;
+            background-color: var(--secondary-color);
+            font-family: 'Tajawal', Arial, sans-serif;
+            font-size: 1rem;
+        }
+        
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+        
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            min-width: 700px;
+        }
+        
+        .invoice-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+        
+        .invoice-table td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+        
+        .editable {
+            background-color: var(--secondary-color);
+            min-width: 80px;
+            transition: all 0.3s;
+        }
+        
+        .editable:focus {
+            background-color: #fff0e0;
+            outline: 2px solid var(--accent-color);
+        }
+        
+        .totals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .total-box {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .total-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .total-box p {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .discount-box {
+            border-top: 3px solid var(--discount-color);
+        }
+        
+        .discount-box h3 {
+            color: var(--discount-color);
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+        }
+        
+        .btn {
+            padding: 10px 25px;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .btn-telegram {
+            background-color: var(--primary-color);
+        }
+        
+        .btn-add {
+            background-color: var(--accent-color);
+            margin: 15px auto;
+            width: 220px;
+            display: block;
+        }
+        
+        .btn-reset {
+            background-color: #6c757d;
+        }
+        
+        .btn-delete {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-print {
+            background-color: var(--success-color);
+        }
+        
+        .btn-save {
+            background-color: var(--save-color);
+        }
+        
+        .btn-clear {
+            background-color: var(--clear-color);
+        }
+        
+        .btn-download {
+            background-color: var(--download-color);
+        }
+        
+        .btn-pdf {
+            background-color: var(--pdf-color);
+        }
+        
+        .delete-container {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .highlight {
+            animation: highlight 1.5s ease;
+        }
+        
+        @keyframes highlight {
+            0% { background-color: var(--secondary-color); }
+            50% { background-color: #ffe0c8; }
+            100% { background-color: var(--secondary-color); }
+        }
+        
+        @media print {
+            .no-print, .top-prayer, .bottom-prayer {
+                display: none;
+            }
+            body {
+                padding: 0;
+                background: white;
+            }
+            .container {
+                box-shadow: none;
+                padding: 10px;
+                margin: 0;
+                max-width: 100%;
+            }
+            .invoice-table th {
+                background-color: var(--primary-color) !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .invoice-number-input {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .container {
+                padding: 15px;
+                margin: 15px auto;
+            }
+            
+            #system-title {
+                font-size: 1.8rem;
+            }
+            
+            .invoice-table th, 
+            .invoice-table td {
+                padding: 8px;
+                font-size: 0.95rem;
+            }
+            
+            .total-box h3 {
+                font-size: 1rem;
+            }
+            
+            .total-box p {
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+                margin: 10px auto;
+            }
+            
+            #system-title {
+                font-size: 1.5rem;
+            }
+            
+            .header-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .invoice-number, .live-time, .invoice-date {
+                font-size: 1rem;
+                padding: 6px 12px;
+            }
+            
+            .totals {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .btn {
+                min-width: 120px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .btn-add {
+                width: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            #system-title {
+                font-size: 1.3rem;
+            }
+            
+            .title-input {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+            
+            .totals {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-prayer no-print">اللهم صل على محمد وال محمد</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="title-container">
+                <h1 id="system-title">نظام الفواتير المتكامل</h1>
+                <div class="title-input-container no-print">
+                    <input type="text" id="title-input" class="title-input" placeholder="تغيير عنوان النظام" value="نظام الفواتير المتكامل">
+                </div>
+            </div>
+            
+            <div class="header-info">
+                <div class="header-details">
+                    <div class="invoice-date" id="invoice-date"></div>
+                    <div class="live-time" id="live-time"></div>
+                </div>
+                <div class="invoice-number no-print">
+                    رقم الفاتورة: 
+                    <input type="text" id="invoice-number-input" class="invoice-number-input" value="1">
+                </div>
+                <div class="invoice-number print-only" style="display:none;">
+                    رقم الفاتورة: <span id="invoice-number-display">1</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table class="invoice-table">
+                <thead>
+                    <tr>
+                        <th>رقم</th>
+                        <th>اسم المادة</th>
+                        <th>السعر</th>
+                        <th>الكمية</th>
+                        <th>الخصم %</th>
+                        <th>المجموع</th>
+                        <th>الواصل</th>
+                    </tr>
+                </thead>
+                <tbody id="invoice-data">
+                    <!-- سيتم ملء البيانات هنا -->
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="delete-container no-print">
+            <button class="btn btn-delete" id="delete-btn">
+                <span>حذف الصف المحدد</span>
+            </button>
+        </div>
+        
+        <button class="btn btn-add no-print" id="add-row-btn">
+            <span>إضافة فاتورة جديدة</span>
+        </button>
+        
+        <div class="totals">
+            <div class="total-box">
+                <h3>إجمالي المبالغ:</h3>
+                <p id="total-amount">0 د.ع</p>
+            </div>
+            <div class="total-box discount-box">
+                <h3>إجمالي الخصم:</h3>
+                <p id="total-discount">0 د.ع</p>
+            </div>
+            <div class="total-box">
+                <h3>إجمالي بعد الخصم:</h3>
+                <p id="total-after-discount">0 د.ع</p>
+            </div>
+            <div class="total-box">
+                <h3>إجمالي الواصل:</h3>
+                <p id="total-received">0 د.ع</p>
+            </div>
+            <div class="total-box">
+                <h3>إجمالي المتبقي:</h3>
+                <p id="total-balance">0 د.ع</p>
+            </div>
+        </div>
+        
+        <div class="action-buttons no-print">
+            <button class="btn btn-reset" id="reset-btn">
+                <span>تصفير جميع القيم</span>
+            </button>
+            <button class="btn btn-save" id="save-btn">
+                <span>حفظ الفاتورة</span>
+            </button>
+            <button class="btn btn-download" id="download-btn">
+                <span>تنزيل كملف Excel</span>
+            </button>
+            <button class="btn btn-pdf" id="pdf-btn">
+                <span>تنزيل كملف PDF</span>
+            </button>
+            <button class="btn btn-telegram" id="telegram-btn">
+                <span>إرسال عبر التليجرام</span>
+            </button>
+            <button class="btn btn-print" id="print-btn">
+                <span>طباعة التقرير</span>
+            </button>
+            <button class="btn btn-clear" id="clear-btn">
+                <span>مسح البيانات المحفوظة</span>
+            </button>
+        </div>
+    </div>
+    
+    <div class="bottom-prayer no-print">
+        رحمة الله من قرأ سورة الفاتحة إلى روح المرحوم علي طرويل راضي
+    </div>
+
+    <script>
+        // بيانات الفواتير
+        let invoices = [
+            { id: 1, item: "", price: "", quantity: "", discount: "0", total: "", received: "" },
+            { id: 2, item: "", price: "", quantity: "", discount: "0", total: "", received: "" }
+        ];
+        
+        let selectedRowIndex = -1;
+
+        // دالة لتحديث التاريخ والوقت
+        function updateDateTime() {
+            const now = new Date();
+            const dateStr = now.toLocaleDateString('ar-EG');
+            document.getElementById("invoice-date").textContent = `تاريخ الفاتورة: ${dateStr}`;
+            
+            let hours = now.getHours();
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            const ampm = hours >= 12 ? 'م' : 'ص';
+            hours = hours % 12 || 12;
+            
+            document.getElementById("live-time").textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // دالة لتحديث رقم الفاتورة
+        function updateInvoiceNumber() {
+            const input = document.getElementById("invoice-number-input");
+            const display = document.getElementById("invoice-number-display");
+            let num = parseInt(input.value) || 1;
+            num = Math.max(1, num);
+            input.value = num;
+            display.textContent = num;
+            
+            // تحديث أرقام الصفوف
+            invoices.forEach((invoice, index) => {
+                invoice.id = num + index;
+            });
+            renderInvoices();
+        }
+
+        // دالة لعرض الفواتير في الجدول
+        function renderInvoices() {
+            const tableBody = document.getElementById("invoice-data");
+            tableBody.innerHTML = "";
+            
+            invoices.forEach((invoice, index) => {
+                const row = document.createElement("tr");
+                
+                // إضافة حدث النقر لتحديد الصف
+                row.addEventListener('click', () => {
+                    document.querySelectorAll("#invoice-data tr").forEach(r => {
+                        r.style.backgroundColor = "";
+                    });
+                    row.style.backgroundColor = "#e3f2fd";
+                    selectedRowIndex = index;
+                });
+                
+                // إنشاء خلايا الصف
+                const cells = [
+                    createCell(invoice.id, false),
+                    createEditableCell(invoice.item, (value) => {
+                        invoices[index].item = value;
+                    }, () => row.cells[2].focus()),
+                    createEditableCell(invoice.price, (value) => {
+                        invoices[index].price = value.replace(/\D/g, '') || "";
+                        calculateRowTotal(index);
+                    }, () => row.cells[3].focus()),
+                    createEditableCell(invoice.quantity, (value) => {
+                        invoices[index].quantity = value.replace(/\D/g, '') || "";
+                        calculateRowTotal(index);
+                    }, () => row.cells[4].focus()),
+                    createEditableCell(invoice.discount, (value) => {
+                        let discount = value.replace(/\D/g, '') || "0";
+                        discount = Math.min(100, Math.max(0, parseInt(discount))).toString();
+                        invoices[index].discount = discount;
+                        calculateRowTotal(index);
+                    }, () => row.cells[5].focus()),
+                    createCell(invoice.total, false),
+                    createEditableCell(invoice.received, (value) => {
+                        invoices[index].received = value.replace(/\D/g, '') || "";
+                        updateTotals();
+                    }, () => {
+                        if (index < invoices.length - 1) {
+                            document.getElementById("invoice-data").rows[index + 1].cells[1].focus();
+                        } else {
+                            addNewRow();
+                        }
+                    })
+                ];
+                
+                cells.forEach(cell => row.appendChild(cell));
+                tableBody.appendChild(row);
+            });
+            
+            updateTotals();
+        }
+
+        // دالة مساعدة لإنشاء خلية عادية
+        function createCell(content, isEditable) {
+            const cell = document.createElement("td");
+            cell.textContent = content;
+            return cell;
+        }
+
+        // دالة مساعدة لإنشاء خلية قابلة للتحرير
+        function createEditableCell(content, onBlur, onEnter) {
+            const cell = document.createElement("td");
+            cell.contentEditable = true;
+            cell.className = "editable";
+            cell.textContent = content;
+            
+            cell.addEventListener('blur', () => {
+                onBlur(cell.textContent);
+                cell.classList.add('highlight');
+                setTimeout(() => cell.classList.remove('highlight'), 1500);
+            });
+            
+            cell.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    onEnter();
+                }
+            });
+            
+            return cell;
+        }
+
+        // دالة لحساب المجموع للصف
+        function calculateRowTotal(index) {
+            const price = parseInt(invoices[index].price) || 0;
+            const quantity = parseInt(invoices[index].quantity) || 0;
+            const discount = parseInt(invoices[index].discount) || 0;
+            
+            const subtotal = price * quantity;
+            const discountAmount = Math.round(subtotal * discount / 100);
+            const total = subtotal - discountAmount;
+            
+            invoices[index].total = total > 0 ? total.toString() : "";
+            invoices[index].received = invoices[index].total;
+            
+            const rows = document.getElementById("invoice-data").rows;
+            if (rows[index]) {
+                rows[index].cells[5].textContent = invoices[index].total || "";
+                rows[index].cells[6].textContent = invoices[index].received || "";
+            }
+            
+            updateTotals();
+        }
+
+        // دالة لتحديث المجاميع
+        function updateTotals() {
+            let totals = {
+                amount: 0,
+                discount: 0,
+                received: 0
+            };
+            
+            invoices.forEach(invoice => {
+                const price = parseInt(invoice.price) || 0;
+                const quantity = parseInt(invoice.quantity) || 0;
+                const discount = parseInt(invoice.discount) || 0;
+                
+                const subtotal = price * quantity;
+                const discountAmount = Math.round(subtotal * discount / 100);
+                
+                totals.amount += subtotal;
+                totals.discount += discountAmount;
+                totals.received += parseInt(invoice.received) || 0;
+            });
+            
+            const afterDiscount = totals.amount - totals.discount;
+            const balance = afterDiscount - totals.received;
+            
+            document.getElementById("total-amount").textContent = `${totals.amount.toLocaleString('ar-EG')} د.ع`;
+            document.getElementById("total-discount").textContent = `${totals.discount.toLocaleString('ar-EG')} د.ع`;
+            document.getElementById("total-after-discount").textContent = `${afterDiscount.toLocaleString('ar-EG')} د.ع`;
+            document.getElementById("total-received").textContent = `${totals.received.toLocaleString('ar-EG')} د.ع`;
+            document.getElementById("total-balance").textContent = `${balance.toLocaleString('ar-EG')} د.ع`;
+        }
+
+        // دالة لإضافة صف جديد
+        function addNewRow() {
+            const invoiceNumber = parseInt(document.getElementById("invoice-number-input").value) || 1;
+            const newId = invoiceNumber + invoices.length;
+            
+            invoices.push({
+                id: newId,
+                item: "",
+                price: "",
+                quantity: "",
+                discount: "0",
+                total: "",
+                received: ""
+            });
+            
+            renderInvoices();
+            
+            // التركيز على خلية اسم المادة في الصف الجديد
+            setTimeout(() => {
+                const rows = document.getElementById("invoice-data").rows;
+                rows[rows.length - 1].cells[1].focus();
+            }, 0);
+        }
+
+        // دالة لحذف الصف المحدد
+        function deleteSelectedRow() {
+            if (selectedRowIndex === -1) {
+                alert("الرجاء تحديد صف لحذفه");
+                return;
+            }
+            
+            if (confirm("هل أنت متأكد من حذف هذا الصف؟")) {
+                invoices.splice(selectedRowIndex, 1);
+                selectedRowIndex = -1;
+                renderInvoices();
+            }
+        }
+
+        // دالة لتصفير جميع القيم
+        function resetAllValues() {
+            if (confirm("هل تريد تصفير جميع القيم في الجدول؟")) {
+                invoices = [
+                    { id: 1, item: "", price: "", quantity: "", discount: "0", total: "", received: "" },
+                    { id: 2, item: "", price: "", quantity: "", discount: "0", total: "", received: "" }
+                ];
+                document.getElementById("invoice-number-input").value = "1";
+                updateInvoiceNumber();
+            }
+        }
+
+        // دالة لحفظ الفاتورة
+        function saveInvoice() {
+            try {
+                const invoiceData = {
+                    title: document.getElementById("title-input").value,
+                    invoiceNumber: document.getElementById("invoice-number-input").value,
+                    invoices: invoices,
+                    totals: {
+                        amount: document.getElementById("total-amount").textContent,
+                        discount: document.getElementById("total-discount").textContent,
+                        afterDiscount: document.getElementById("total-after-discount").textContent,
+                        received: document.getElementById("total-received").textContent,
+                        balance: document.getElementById("total-balance").textContent
+                    },
+                    date: document.getElementById("invoice-date").textContent
+                };
+                
+                localStorage.setItem('savedInvoice', JSON.stringify(invoiceData));
+                alert("تم حفظ الفاتورة بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء حفظ الفاتورة");
+                console.error(error);
+            }
+        }
+
+        // دالة لتحميل الفاتورة المحفوظة
+        function loadSavedInvoice() {
+            try {
+                const savedData = localStorage.getItem('savedInvoice');
+                if (savedData) {
+                    const invoiceData = JSON.parse(savedData);
+                    
+                    document.getElementById("title-input").value = invoiceData.title;
+                    document.getElementById("invoice-number-input").value = invoiceData.invoiceNumber;
+                    document.getElementById("system-title").textContent = invoiceData.title;
+                    
+                    invoices = invoiceData.invoices;
+                    renderInvoices();
+                    
+                    return true;
+                }
+            } catch (error) {
+                console.error(error);
+            }
+            return false;
+        }
+
+        // دالة لمسح البيانات المحفوظة
+        function clearSavedInvoice() {
+            if (confirm("هل أنت متأكد من مسح جميع البيانات المحفوظة؟")) {
+                localStorage.removeItem('savedInvoice');
+                alert("تم مسح البيانات المحفوظة بنجاح");
+                location.reload();
+            }
+        }
+
+        // دالة لإرسال الفاتورة عبر التليجرام
+        function sendToTelegram() {
+            let message = `*${document.getElementById("system-title").textContent}*\n\n`;
+            message += `📅 ${document.getElementById("invoice-date").textContent}\n`;
+            message += `🕒 ${document.getElementById("live-time").textContent}\n`;
+            message += `🔢 رقم الفاتورة: ${document.getElementById("invoice-number-input").value}\n\n`;
+            
+            message += "*تفاصيل الفاتورة*\n";
+            message += "--------------------------\n";
+            
+            invoices.forEach(invoice => {
+                if (invoice.item || invoice.price || invoice.quantity) {
+                    message += `📌 ${invoice.item || "غير محدد"}\n`;
+                    message += `💰 السعر: ${invoice.price || "0"} د.ع\n`;
+                    message += `🧮 الكمية: ${invoice.quantity || "0"}\n`;
+                    message += `🎫 الخصم: ${invoice.discount || "0"}%\n`;
+                    message += `💵 المجموع: ${invoice.total || "0"} د.ع\n`;
+                    message += `💳 الواصل: ${invoice.received || "0"} د.ع\n`;
+                    message += "--------------------------\n";
+                }
+            });
+            
+            message += "\n*الملخص*\n";
+            message += `🔢 الإجمالي: ${document.getElementById("total-amount").textContent}\n`;
+            message += `🎫 إجمالي الخصم: ${document.getElementById("total-discount").textContent}\n`;
+            message += `💰 الصافي: ${document.getElementById("total-after-discount").textContent}\n`;
+            message += `💳 إجمالي الواصل: ${document.getElementById("total-received").textContent}\n`;
+            message += `⚖️ المتبقي: ${document.getElementById("total-balance").textContent}\n\n`;
+            
+            message += "شكراً لاستخدامكم نظام الفواتير المتكامل";
+            
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://t.me/share/url?url=&text=${encodedMessage}`, '_blank');
+        }
+
+        // دالة لتنزيل الفاتورة كملف Excel
+        function downloadAsExcel() {
+            try {
+                // إنشاء مصنف Excel
+                const wb = XLSX.utils.book_new();
+                
+                // تحضير البيانات للتصدير
+                const exportData = invoices.map(invoice => ({
+                    "رقم": invoice.id,
+                    "اسم المادة": invoice.item || "",
+                    "السعر": invoice.price || "0",
+                    "الكمية": invoice.quantity || "0",
+                    "الخصم %": invoice.discount || "0",
+                    "المجموع": invoice.total || "0",
+                    "الواصل": invoice.received || "0"
+                }));
+                
+                // إضافة الملخص
+                exportData.push({});
+                exportData.push({
+                    "اسم المادة": "الملخص",
+                    "السعر": document.getElementById("total-amount").textContent
+                });
+                exportData.push({
+                    "اسم المادة": "إجمالي الخصم",
+                    "السعر": document.getElementById("total-discount").textContent
+                });
+                exportData.push({
+                    "اسم المادة": "الصافي بعد الخصم",
+                    "السعر": document.getElementById("total-after-discount").textContent
+                });
+                exportData.push({
+                    "اسم المادة": "إجمالي الواصل",
+                    "السعر": document.getElementById("total-received").textContent
+                });
+                exportData.push({
+                    "اسم المادة": "المتبقي",
+                    "السعر": document.getElementById("total-balance").textContent
+                });
+                
+                // إنشاء ورقة عمل
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                
+                // إضافة ورقة العمل إلى المصنف
+                XLSX.utils.book_append_sheet(wb, ws, "الفاتورة");
+                
+                // إنشاء اسم للملف
+                const fileName = `فاتورة_${document.getElementById("invoice-number-input").value}_${new Date().toISOString().slice(0, 10)}.xlsx`;
+                
+                // تنزيل الملف
+                XLSX.writeFile(wb, fileName);
+                
+                alert("تم تنزيل الفاتورة كملف Excel بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء إنشاء ملف Excel");
+                console.error(error);
+            }
+        }
+
+        // دالة لتنزيل الفاتورة كملف PDF
+        async function downloadAsPDF() {
+            try {
+                // إنشاء مستند PDF جديد
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF('p', 'pt', 'a4');
+                
+                // إعداد خيارات html2canvas
+                const options = {
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    scrollY: 0
+                };
+                
+                // أخذ لقطة للعنصر المطلوب
+                const element = document.querySelector('.container');
+                
+                // انتظر حتى يتم تحويل HTML إلى canvas
+                const canvas = await html2canvas(element, options);
+                
+                // إضافة الصورة إلى PDF
+                const imgData = canvas.toDataURL('image/png');
+                const imgWidth = doc.internal.pageSize.getWidth() - 40;
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                doc.addImage(imgData, 'PNG', 20, 20, imgWidth, imgHeight);
+                
+                // حفظ الملف
+                const fileName = `فاتورة_${document.getElementById("invoice-number-input").value}_${new Date().toISOString().slice(0, 10)}.pdf`;
+                doc.save(fileName);
+                
+                alert("تم تنزيل الفاتورة كملف PDF بنجاح!");
+            } catch (error) {
+                alert("حدث خطأ أثناء إنشاء ملف PDF");
+                console.error(error);
+            }
+        }
+
+        // دالة لتغيير عنوان النظام
+        function updateSystemTitle() {
+            const newTitle = document.getElementById("title-input").value || "نظام الفواتير المتكامل";
+            document.getElementById("system-title").textContent = newTitle;
+            document.title = newTitle;
+        }
+
+        // تهيئة الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // تحميل البيانات المحفوظة أو تهيئة جديدة
+            if (!loadSavedInvoice()) {
+                updateDateTime();
+                updateInvoiceNumber();
+                renderInvoices();
+            }
+            
+            // تحديث الوقت كل ثانية
+            setInterval(updateDateTime, 1000);
+            
+            // إعداد أحداث الإدخال
+            document.getElementById("title-input").addEventListener('input', updateSystemTitle);
+            document.getElementById("invoice-number-input").addEventListener('change', updateInvoiceNumber);
+            
+            // إعداد أحداث الأزرار
+            document.getElementById("add-row-btn").addEventListener('click', addNewRow);
+            document.getElementById("delete-btn").addEventListener('click', deleteSelectedRow);
+            document.getElementById("reset-btn").addEventListener('click', resetAllValues);
+            document.getElementById("save-btn").addEventListener('click', saveInvoice);
+            document.getElementById("download-btn").addEventListener('click', downloadAsExcel);
+            document.getElementById("pdf-btn").addEventListener('click', downloadAsPDF);
+            document.getElementById("telegram-btn").addEventListener('click', sendToTelegram);
+            document.getElementById("print-btn").addEventListener('click', () => window.print());
+            document.getElementById("clear-btn").addEventListener('click', clearSavedInvoice);
+            
+            // ضبط التركيز الأولي على أول خلية إدخال
+            setTimeout(() => {
+                const rows = document.getElementById("invoice-data").rows;
+                if (rows.length > 0 && rows[0].cells.length > 1) {
+                    rows[0].cells[1].focus();
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
