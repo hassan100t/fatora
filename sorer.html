@@ -2,132 +2,303 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>3uTools - iOS</title>
+  <title>فاتورة</title>
+  
+  <link rel="stylesheet" href="">
+
   <style>
+
+
+    
+
+
+
+
+
+
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f3f3f3;
+      font-family: Arial, sans-serif;
+      background: #fff;
       margin: 0;
-      padding: 0;
+      color: #000;
     }
-    header {
-      background-color: #1b7ef2;
-      padding: 15px 30px;
-      color: white;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 40px auto;
+    .invoice {
+      width: 100%;
+      box-sizing: border-box;
       padding: 20px;
     }
-    .section-title {
-      text-align: center;
-      margin-bottom: 40px;
-    }
-    .section-title h2 {
-      font-size: 24px;
-      color: #333;
-    }
-    .cards {
+    .form-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
+      justify-content: space-between;
     }
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      padding: 25px;
-      width: 300px;
-      text-align: center;
-      cursor: pointer;
-      transition: box-shadow 0.3s ease;
-    }
-    .card:hover {
-      box-shadow: 0 6px 18px rgba(0,0,0,0.15);
-    }
-    .card img {
-      width: 80px;
-      height: 80px;
+    .form-group {
+      width: 48%;
       margin-bottom: 15px;
     }
-    .card h3 {
-      margin-bottom: 10px;
-      color: #1b7ef2;
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
     }
-    .card p {
-      color: #666;
-      font-size: 15px;
-      line-height: 1.6;
+    input, select, textarea {
+      padding: 6px;
+      width: 100%;
+      font-size: 14px;
+      box-sizing: border-box;
+      font-weight: bold;
+    }
+    input::placeholder {
+      color: #999;
+      font-weight: normal;
+    }
+    select:disabled {
+      background-color: #eee;
+    }
+    textarea {
+      height: 80px;
+      resize: vertical;
+    }
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 20px;
     }
     .btn {
-      display: inline-block;
-      margin-top: 15px;
-      background-color: #1b7ef2;
-      color: white;
       padding: 10px 20px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background-color 0.3s ease;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #000;
+      color: #fff;
+      border: none;
     }
-    .btn:hover {
-      background-color: #155bb5;
+    @media print {
+      .btn-container {
+        display: none;
+      }
     }
+    /* لإظهار وقت التحديث بشكل جميل داخل الفاتورة */
+    #updateTimeDisplay {
+      margin-top: 5px;
+      font-weight: normal;
+      color: #555;
+      font-size: 14px;
+    }
+
+
+
+
+    
+    .center-text {
+      font-size: 28px;
+      font-weight: bold;
+      color: #007BFF;
+      background: white;
+      padding: 20px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  
+
+    
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>3uTools - أدوات iOS</h1>
-  </header>
-
-  <div class="container">
-    <div class="section-title">
-      <h2>معلومات وخدمات 3uTools</h2>
-    </div>
-
-    <div class="cards">
-
-      <!-- مربع توافق الأجهزة -->
-      <div class="card" onclick="window.location.href='FATORA.html'">
-        
-        <h3>فاتوره مبيعات عامه </h3>FATORA
-        <p>
-         فاتورة مبيعات 
-        </p>
-        <span class="btn">عرض قائمة التوافق</span>
+  <div class="invoice" id="invoice">
+    <div class="form-row">
+      <div class="form-group">
+        <label>اسم الزبون:</label>
+        <input type="text" id="customerName">
+      </div>
+      <div class="form-group">
+        <label>اسم الشركة:</label>
+        <input type="text" id="companyInput" list="companyList">
+        <datalist id="companyList">
+          <option value="Samsung">
+          <option value="Apple">
+          <option value="Huawei">
+          <option value="Xiaomi">
+          <option value="Oppo">
+          <option value="Realme">
+          <option value="Infinix">
+          <option value="TECNO">
+          <option value="Nokia">
+          <option value="Lenovo">
+          <option value="Sony">
+        </datalist>
       </div>
 
-      <!-- مربع ضمان الصيانة -->
-      <div class="card" onclick="window.location.href='index.html'">
-        <h3>ضمان الصيانة</h3>
-        <p>
-          فاتورة تحتوي على أرقام تسلسلية وفترة ضمان محددة لكل جهاز.
-        </p>
-        <span class="btn">اذهب إلى الفاتورة</span>
+      <div class="form-group">
+        <label>رقم الهاتف:</label>
+        <input type="text" id="customerPhone">
+      </div>
+      <div class="form-group">
+        <label>نوع الجهاز:</label>
+        <input type="text" id="deviceInput" list="deviceList">
+        <datalist id="deviceList"></datalist>
       </div>
 
-      <!-- مربع توافق الشاشات -->
-      <div class="card" onclick="window.location.href='totel.html'">
-        <h3>توافــــق الشاشات</h3>
-        <p>توافق مجموعة من الهواتف تحمل نفس نوع الشاشة وتسمح باستخدامها.</p>
-        <span class="btn">انتقل الى التوافق</span>
+      <div class="form-group">
+        <label>العنوان:</label>
+        <input type="text" id="customerAddress">
+      </div>
+      <div class="form-group">
+        <label>نوع العطل:</label>
+        <input type="text" id="faultInput" list="faultList">
+        <datalist id="faultList">
+          <option value="شاشة مكسورة">
+          <option value="بطارية ضعيفة">
+          <option value="مشكلة في الصوت">
+          <option value="شاشة لا تستجيب">
+          <option value="تجميد الجهاز">
+          <option value="كاميرا معطلة">
+          <option value="قلم لا يعمل">
+          <option value="شاشة سوداء">
+          <option value="مشكلة في الشحن">
+          <option value="مشكلة في النظام">
+          <option value="شاشة متقطعة">
+          <option value="مشكلة في الشبكة">
+          <option value="تعليق الجهاز">
+          <option value="شحن بطيء">
+          <option value="مشكلة في السماعات">
+          <option value="تعليق التطبيقات">
+          <option value="سخونة الجهاز">
+          <option value="توقف التطبيقات">
+        </datalist>
       </div>
 
+      <div class="form-group">
+        <label>الرقم التسلسلي:</label>
+        <input type="text" id="serialNumber">
+      </div>
+
+      <div class="form-group">
+        <label>السعر:</label>
+        <input type="text" id="price" placeholder="دينار عراقي">
+      </div>
+
+      <!-- مدة الضمان -->
+      <div class="form-group">
+        <label>مدة الضمان:</label>
+        <select id="warrantyPeriod">
+         <option value="موقعي"موقعي > </option>
+          <option value="5 أيام">5 أيام</option>
+          <option value="10 أيام">10 أيام</option>
+          <option value="15 يوم">15 يوم</option>
+          <option value="20 يوم">20 يوم</option>
+          <option value="30 يوم">30 يوم</option>
+        </select>
+      </div>
+
+      <!-- وقت التحديث -->
+      <div class="form-group">
+        <label>  التاريخ والساعـــة</label>
+        <input type="datetime-local" id="updateTime">
+        <div id="updateTimeDisplay"></div>
+      </div>
+
+      <div class="form-group" style="width: 100%;">
+        <label>الملاحظات:</label>
+        <textarea id="notes" placeholder="أدخل الملاحظات هنا..."></textarea>
+      </div>
     </div>
   </div>
 
-  <footer>
-    &copy; 2025 3uTools. جميع الحقوق محفوظة.
-  </footer>
+  <div class="btn-container">
+  <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
+  <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
+  <a href="totel.html" class="btn link-btn">📱 توافق الشاشات</a>
+</div>
+ 
+  <!-- مكتبة html2pdf -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <script>
+    const models = {
+      Samsung: ["Galaxy S23", "Galaxy A54", "Galaxy Note 20"],
+      Apple: ["iPhone 13", "iPhone 12", "iPhone SE"],
+      Huawei: ["P50 Pro", "Nova 9", "Mate 40"],
+      Xiaomi: ["Redmi Note 11", "Mi 11", "Poco X3"],
+      Oppo: ["Reno 8", "A96", "Find X5"],
+      Realme: ["Realme 9", "GT Neo", "C35"],
+      Infinix: ["Hot 12", "Note 11", "Zero X"],
+      TECNO: ["Camon 19", "Spark 10", "Pova 5"],
+      Nokia: ["Nokia G21", "Nokia X10", "Nokia 5.4"],
+      Lenovo: ["K12", "Legion Duel", "Z6 Pro"],
+      Sony: ["Xperia 1 III", "Xperia 10", "Xperia L4"],
+    };
+
+    document.getElementById("companyInput").addEventListener("input", function() {
+      const value = this.value;
+      const list = models[value] || [];
+      const deviceList = document.getElementById("deviceList");
+      deviceList.innerHTML = "";
+      list.forEach(model => {
+        const option = document.createElement("option");
+        option.value = model;
+        deviceList.appendChild(option);
+      });
+    });
+
+    // تحديث عرض وقت التحديث بصيغة عربية مقروءة
+    const updateTimeInput = document.getElementById('updateTime');
+    const updateTimeDisplay = document.getElementById('updateTimeDisplay');
+
+    updateTimeInput.addEventListener('change', () => {
+      const dt = new Date(updateTimeInput.value);
+      if (!isNaN(dt.getTime())) {
+        // صيغة عربية بسيطة للتاريخ والوقت
+        const options = { 
+          year: 'numeric', month: 'long', day: 'numeric', 
+          hour: '2-digit', minute: '2-digit', hour12: false 
+        };
+        updateTimeDisplay.textContent = dt.toLocaleDateString('ar-EG', options);
+      } else {
+        updateTimeDisplay.textContent = '';
+      }
+    });
+
+    function printInvoice() {
+      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
+      const originalTitle = document.title;
+      document.title = serial;
+      window.print();
+      document.title = originalTitle;
+    }
+
+    function saveAsPDF() {
+      const element = document.getElementById("invoice");
+      const device = document.getElementById("deviceInput").value.trim() || "جهاز";
+      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
+      const filename = device + " " + serial + ".pdf";
+
+      const opt = {
+        margin: 0.5,
+        filename: filename,
+        image: { type: 'jpeg', quality: 0.7 },
+        html2canvas: { scale: 1 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      html2pdf().set(opt).from(element).save();
+    }
+ 
+
+  </script>
+
+  <a href="totel.html" class="screen-compatibility-link"></a>
+
+  <script src="search.js"></script>
+
+
+
+
+  
+  
+
 
 </body>
 </html>
