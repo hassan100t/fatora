@@ -107,7 +107,7 @@
       </div>
 
       <!-- مربع ضمان الصيانة -->
-      <div class="card" onclick="window.location.href='index.html'">
+      <div class="card" onclick="window.location.href='sorer.html'">
         <h3>ضمان الصيانة</h3>
         <p>
           فاتورة تحتوي على أرقام تسلسلية وفترة ضمان محددة لكل جهاز.
