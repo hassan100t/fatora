@@ -13,6 +13,7 @@
     }
     header {
       background-color: #1b7ef2;
+      
       padding: 15px 30px;
       color: white;
       text-align: center;
@@ -81,17 +82,19 @@
     .btn:hover {
       background-color: #155bb5;
     }
+    
   </style>
 </head>
 <body>
 
   <header>
-    <h1>3uTools - أدوات iOS</h1>
+    
+    <h1>Al-Moussawi</h1>
   </header>
 
   <div class="container">
     <div class="section-title">
-      <h2>معلومات وخدمات 3uTools</h2>
+      <h2></h2>
     </div>
 
     <div class="cards">
@@ -99,20 +102,18 @@
       <!-- مربع توافق الأجهزة -->
       <div class="card" onclick="window.location.href='FATORA.html'">
         
-        <h3>فاتوره مبيعات عامه </h3>FATORA
-        <p>
-         فاتورة مبيعات 
-        </p>
-        <span class="btn">عرض قائمة التوافق</span>
+        <h3>فاتوره مبيعات عامه </h3>
+        <p> فواتير البيع  يتيح إدخال البيانات، حساب الإجماليات، والمبالغ المستلمة والمتبقية بشكل تلقائي  </p>
+        <span class="btn">عرض الفاتورة</span>
       </div>
 
       <!-- مربع ضمان الصيانة -->
       <div class="card" onclick="window.location.href='sorer.html'">
         <h3>ضمان الصيانة</h3>
         <p>
-          فاتورة تحتوي على أرقام تسلسلية وفترة ضمان محددة لكل جهاز.
+         هذه فاتورة صيانة إلكترونية مصممة لتعرض نموذجًا لتسجيل بيانات الزبائن
         </p>
-        <span class="btn">اذهب إلى الفاتورة</span>
+        <span class="btn">اذهب إلى الضمان</span>
       </div>
 
       <!-- مربع توافق الشاشات -->
@@ -121,12 +122,12 @@
         <p>توافق مجموعة من الهواتف تحمل نفس نوع الشاشة وتسمح باستخدامها.</p>
         <span class="btn">انتقل الى التوافق</span>
       </div>
-
+      
     </div>
   </div>
 
   <footer>
-    &copy; 2025 3uTools. جميع الحقوق محفوظة.
+    &copy; 2025 TROEIL
   </footer>
 
 </body>
