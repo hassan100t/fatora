@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>ابحث توافقات</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap">
 <style>
   body {
     background-color: #eef1f5;
@@ -12,6 +13,7 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Cairo', sans-serif, Tahoma, sans-serif;
+    padding-bottom: 120px;
   }
 
   .search-container {
@@ -23,30 +25,14 @@
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
   }
 
-  input[type="text"], button {
+  input[type="text"] {
     width: 100%;
     padding: 14px;
     font-size: 16px;
     border-radius: 10px;
     box-sizing: border-box;
-  }
-
-  input[type="text"] {
     border: 1px solid #ccc;
     margin-bottom: 15px;
-  }
-
-  button {
-    border: none;
-    background-color: #28a745;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-
-  button:hover {
-    background-color: #218838;
   }
 
   .results {
@@ -57,6 +43,17 @@
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .highlighted-results {
+    margin-top: 30px;
+    max-width: 500px;
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    border: 2px solid #007bff;
   }
 
   .group {
@@ -72,6 +69,11 @@
     animation: blink 3s infinite;
   }
 
+  .highlighted-title {
+    color: #007bff;
+    animation: blink 3s infinite;
+  }
+
   @keyframes blink {
     0%, 100% { color: #333; }
     50% { color: #007bff; }
@@ -82,8 +84,18 @@
     padding-left: 20px;
   }
 
-  li.highlight {
-    background-color: yellow;
+  .highlighted-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  .highlighted-item {
+    background-color: #fff3cd;
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    font-weight: 500;
+    border: 1px solid #ffeaa7;
   }
 
   footer {
@@ -113,8 +125,14 @@
 <body>
 
 <div class="search-container">
+  <h1 style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #333;">ابحث توافقات</h1>
   <input type="text" id="searchInput" placeholder="اكتب اسـم أو رقم الموديل الهاتــف بل الكامـــل" oninput="searchCompatibility()" autocomplete="off"/>
+</div>
 
+<div id="highlightedResults" class="highlighted-results" style="display:none;">
+  <h3 class="highlighted-title">النتائج المطابقة:</h3>
+  <ul id="highlightedList" class="highlighted-list"></ul>
+</div>
 
 <div id="results" class="results" style="display:none;"></div>
 
@@ -125,7 +143,6 @@
 
 <script>
 const compatibilityGroups = [
- 
   {
     devices: [
       "TECNO SPARK GO 2023     (BF7)",
@@ -370,228 +387,205 @@ const compatibilityGroups = [
     ]
   },
   {
-    devices:[
-    
-    "INFINIX HOT 10S           (X689)",
-    "INFINIX HOT 10T           (X689C)",
-    "INFINIX SMART 6 PLUS      (X6823C)",
-    "TECNO   SPARK 7P           (KF7J)",
-    "ITEL    VISION 3 PLUS      (P682LP)",
-    "ITEL    P38 PRO            (P682L)",
-
-    
+    devices: [
+      "INFINIX HOT 10S           (X689)",
+      "INFINIX HOT 10T           (X689C)",
+      "INFINIX SMART 6 PLUS      (X6823C)",
+      "TECNO   SPARK 7P           (KF7J)",
+      "ITEL    VISION 3 PLUS      (P682LP)",
+      "ITEL    P38 PRO            (P682L)"
     ]
   },
   {
-    devices:[
-    "Vivo Y90          (1908)",
-    "Vivo Y93          (1814)",
-    "Vivo Y91          (1811/PD1818BF_EX)",
-    "Vivo Y91i         (1820_19)",
-    "Vivo Y91C         (1820)" ,
-    "Vivo Y95          (1807)" ,
-    "Vivo Y1s          (1929)"
-    
-    
-    ]
-  },
-
-  {
-    devices:[
-    "Vivo Y97        (V1813A)",
-    "Vivo V11        (1804)",
-    "Vivo V11i       (1806)",
-    "Vivo Z3         (V1813BT, V1813BA)",
-    "vivo Z3i        (X)" 
-    
-    
-    
+    devices: [
+      "Vivo Y90          (1908)",
+      "Vivo Y93          (1814)",
+      "Vivo Y91          (1811/PD1818BF_EX)",
+      "Vivo Y91i         (1820_19)",
+      "Vivo Y91C         (1820)" ,
+      "Vivo Y95          (1807)" ,
+      "Vivo Y1s          (1929)"
     ]
   },
   {
-
-    devices:[
-    
-    "VIVO Y85          (1726)",
-    "VIVO V9           (X)" ,
-    "VIVO V9 PRO       (X)",
-    "VIVO Z1           (1951)",
-    "VIVO Z1i          (V1730DA)",
-    
+    devices: [
+      "Vivo Y97        (V1813A)",
+      "Vivo V11        (1804)",
+      "Vivo V11i       (1806)",
+      "Vivo Z3         (V1813BT, V1813BA)",
+      "vivo Z3i        (X)" 
     ]
   },
   {
-    devices:[
-    "VIVO Y79        (X)",
-    "VIVO V7 Plus    (1716)"
+    devices: [
+      "VIVO Y85          (1726)",
+      "VIVO V9           (X)" ,
+      "VIVO V9 PRO       (X)",
+      "VIVO Z1           (1951)",
+      "VIVO Z1i          (V1730DA)"
     ]
   },
   {
-    devices:[
-    "VIVO Y19       (B-H9)",
-    "VIVO Y5s       (V1934A)",
-    "VIVO U3        (V1941A, V1941T)"
+    devices: [
+      "VIVO Y79        (X)",
+      "VIVO V7 Plus    (1716)"
     ]
   },
   {
-    devices:[
-    
-    "VIVO Y3          (V1901A, V1901T)",
-    "VIVO Y3s         (X)",
-    "VIVO Y11         (X)",
-    "VIVO Y12         (1904)",
-    "VIVO Y15         (1901)",
-    "VIVO Y17 2019    (1902, V1901A, V1901, 1901, 1902_19)"
+    devices: [
+      "VIVO Y19       (B-H9)",
+      "VIVO Y5s       (V1934A)",
+      "VIVO U3        (V1941A, V1941T)"
     ]
   },
   {
-    devices:[
-    "VIVO Y7s         (BBK V1913)",
-    "VIVO Y9s         (V1945A, V1945T)",
-    "VIVO S1          (1907)",
-    "VIVO S1 Prime    (V1937)",
-    "VIVO S1 PRO      (1920, PD1945F_EX, 1920_20)",
-    "VIVO Z5          (V1921A, V1921T, 1921)",
-    "VIVO Z1x         (1917)",
-    "VIVO iQOO Neo    (V1914A)",
-    "VIVO V17 Russia  (V1945A, V1945T)"
-    
+    devices: [
+      "VIVO Y3          (V1901A, V1901T)",
+      "VIVO Y3s         (X)",
+      "VIVO Y11         (X)",
+      "VIVO Y12         (1904)",
+      "VIVO Y15         (1901)",
+      "VIVO Y17 2019    (1902, V1901A, V1901, 1901, 1902_19)"
     ]
   },
   {
-    devices:[
-    	"vivo Y04         (V2430)" ,
+    devices: [
+      "VIVO Y7s         (BBK V1913)",
+      "VIVO Y9s         (V1945A, V1945T)",
+      "VIVO S1          (1907)",
+      "VIVO S1 Prime    (V1937)",
+      "VIVO S1 PRO      (1920, PD1945F_EX, 1920_20)",
+      "VIVO Z5          (V1921A, V1921T, 1921)",
+      "VIVO Z1x         (1917)",
+      "VIVO iQOO Neo    (V1914A)",
+      "VIVO V17 Russia  (V1945A, V1945T)"
+    ]
+  },
+  {
+    devices: [
+      "vivo Y04         (V2430)" ,
       "VIVO Y19E        (V2431)" ,
       "VIVO Y29E        (V2420 .V2421)",
       "VIVO Y29S        (V2446)"
     ]
   },
   {
-    devices:[
-    "vivo V11          (1804 .1806 .1814)",
-    "VIVO V11 PRO      ( 1804 .1806 .1814 .PD1813F_EX .V1814A)",
-    "VIVO X23          (V1809A .V1816A .V1809T .V1816T)",
-    "VIVO X21s OLED    (V1814A .V1814T)"
+    devices: [
+      "vivo V11          (1804 .1806 .1814)",
+      "VIVO V11 PRO      ( 1804 .1806 .1814 .PD1813F_EX .V1814A)",
+      "VIVO X23          (V1809A .V1816A .V1809T .V1816T)",
+      "VIVO X21s OLED    (V1814A .V1814T)"
     ]
   },
   {
-    devices:[
-    "VIVO Y31      (V2036  .V2036_21)",
-    "VIVO Y31s     (V2054A .V2068A)",
-    "VIVO Y33s     (V2109-MD)",
-    "VIVO Y51 2020 (V2030)",
-    "VIVO Y51A     (V2031)",
-    "VIVO Y52s     (V2057A)",
-    "VIVO Y53s 5G  (V2111A .V2058)",
-    "VIVO Y55      (V2127-SB)",
-    "VIVO Y72 5G   (V2041)",
-    "VIVO Y76      (V2124)",
-    "VIVO Y76s     (V2156A)"
+    devices: [
+      "VIVO Y31      (V2036  .V2036_21)",
+      "VIVO Y31s     (V2054A .V2068A)",
+      "VIVO Y33s     (V2109-MD)",
+      "VIVO Y51 2020 (V2030)",
+      "VIVO Y51A     (V2031)",
+      "VIVO Y52s     (V2057A)",
+      "VIVO Y53s 5G  (V2111A .V2058)",
+      "VIVO Y55      (V2127-SB)",
+      "VIVO Y72 5G   (V2041)",
+      "VIVO Y76      (V2124)",
+      "VIVO Y76s     (V2156A)"
     ]
   },
   {
-    devices:[
-    
-   "VIVO Y22          (V2207)",
-    "VIVP Y22s 2020   (V2206)",
-    
+    devices: [
+      "VIVO Y22          (V2207)",
+      "VIVP Y22s 2020   (V2206)"
     ]
   },
   {
-    devices:[
-    "VIVO Y20       (2029)" ,
-    "VIVO Y20s      (V2038)" ,
-    "VIVO Y20g      (V2038)",
-    "VIVO Y20a      (V2052 .V2054 .V2070 .V2101 .V2034)",
-    "VIVO Y20i      (V2027 .V2032)" ,
-    "VIVO Y15s      (V2120 .V2147 .V2139)" ,
-    "VIVO Y15A      (V2134) " ,
-    "VIVO Y12s      (V2033)",
-    "VIVO Y12A      (V2102)",
-    "VIVO Y10       (V2168A)",
-    "VIVP Y01       (V2166)",
-    "VIVO Y11s      (V2028)" ,
-    "VIVO Y21s      (V2110)",
+    devices: [
+      "VIVO Y20       (2029)" ,
+      "VIVO Y20s      (V2038)" ,
+      "VIVO Y20g      (V2038)",
+      "VIVO Y20a      (V2052 .V2054 .V2070 .V2101 .V2034)",
+      "VIVO Y20i      (V2027 .V2032)" ,
+      "VIVO Y15s      (V2120 .V2147 .V2139)" ,
+      "VIVO Y15A      (V2134) " ,
+      "VIVO Y12s      (V2033)",
+      "VIVO Y12A      (V2102)",
+      "VIVO Y10       (V2168A)",
+      "VIVP Y01       (V2166)",
+      "VIVO Y11s      (V2028)" ,
+      "VIVO Y21s      (V2110)"
     ]
   },
   {
-
-  devices:[
-  
-  "VIVO Y21           (V2111)",
-  "VIVO Y21S          (V2110)", 
-   "VIVO Y21T         (V2135)",
-  "VIVO Y33s          (V2109-MD)" ,
-  "VIVO Y02s          (V2203)" ,
-  "VICO Y32           (V2158A) ",
-  "VIVO Y025          (X)",
-  "VIVO Y1            (PD2014F)",
-  "VIVO Y16           (	V2204 .V2214)"
-  ]
+    devices: [
+      "VIVO Y21           (V2111)",
+      "VIVO Y21S          (V2110)", 
+      "VIVO Y21T         (V2135)",
+      "VIVO Y33s          (V2109-MD)" ,
+      "VIVO Y02s          (V2203)" ,
+      "VICO Y32           (V2158A) ",
+      "VIVO Y025          (X)",
+      "VIVO Y1            (PD2014F)",
+      "VIVO Y16           (	V2204 .V2214)"
+    ]
   },
-{
-  devices:[
-  "VVIVO Y30         (1938)" ,
-  "VIVO Y30i         (2019)"
-  ]
-},
-{
-  devices:[
-  "vivo V20          (V2025 .V2024)"  ,
-  "vivo V20 se       (5656196)"
-  ]
-},
-{
-devices:[
-  "vivo X60           (X)",
-  "vivo X60T          (V2056A)",
-  "vivo X70           (X)",
-  "vivo X70T          (V2132A)"
-]
-},
-{
-  devices:[
-  "vivo v30            (X)",
-  "vivo v30 pro        (V2319)",
-  "vivo S17            (X) ",
-  "vivo S17P           (X)",
-   "vivo S17T          (X) ",
-   "vivo x90 PRO       (X)",
-   "vivo v29           (X)",
-   "vivo v29 PRO       (X)",
-   "vivo x70 PRO Plus  (X)",
-   "vivo x80 PRO       (X)",
-  
-  ]
-},
-{
-  devices:[
-  "vivo V27           (X)",
-  "vivo S16           (X)",
-  "vivo Y78 Plus      (X)",
-  "vivo V29 Lite      (X)",
-  "vivo V29e          (X)",
-  "vivo Y100          (X)",
-  "vivo Y200 PRO      (X)",
-  ]
-},
-{
-  devices:[
-  
-  
-  
-  ]
-}
+  {
+    devices: [
+      "VVIVO Y30         (1938)" ,
+      "VIVO Y30i         (2019)"
+    ]
+  },
+  {
+    devices: [
+      "vivo V20          (V2025 .V2024)"  ,
+      "vivo V20 se       (5656196)"
+    ]
+  },
+  {
+    devices: [
+      "vivo X60           (X)",
+      "vivo X60T          (V2056A)",
+      "vivo X70           (X)",
+      "vivo X70T          (V2132A)"
+    ]
+  },
+  {
+    devices: [
+      "vivo v30            (X)",
+      "vivo v30 pro        (V2319)",
+      "vivo S17            (X) ",
+      "vivo S17P           (X)",
+      "vivo S17T          (X) ",
+      "vivo x90 PRO       (X)",
+      "vivo v29           (X)",
+      "vivo v29 PRO       (X)",
+      "vivo x70 PRO Plus  (X)",
+      "vivo x80 PRO       (X)"
+    ]
+  },
+  {
+    devices: [
+      "vivo V27           (X)",
+      "vivo S16           (X)",
+      "vivo Y78 Plus      (X)",
+      "vivo V29 Lite      (X)",
+      "vivo V29e          (X)",
+      "vivo Y100          (X)",
+      "vivo Y200 PRO      (X)"
+    ]
+  }
 ];
-
 
 function searchCompatibility() {
   const query = document.getElementById("searchInput").value.trim().toLowerCase();
   const resultsDiv = document.getElementById("results");
+  const highlightedDiv = document.getElementById("highlightedResults");
+  const highlightedList = document.getElementById("highlightedList");
 
   if (!query) {
     resultsDiv.style.display = "none";
+    highlightedDiv.style.display = "none";
     resultsDiv.innerHTML = "";
+    highlightedList.innerHTML = "";
     return;
   }
 
@@ -599,28 +593,47 @@ function searchCompatibility() {
     group.devices.some(device => device.toLowerCase().includes(query))
   );
 
-  resultsDiv.style.display = "block";
+  // Get highlighted devices
+  const highlightedDevices = [];
+  matchedGroups.forEach(group => {
+    group.devices.forEach(device => {
+      if (device.toLowerCase().includes(query)) {
+        highlightedDevices.push(device);
+      }
+    });
+  });
 
   if (matchedGroups.length === 0) {
+    resultsDiv.style.display = "block";
+    highlightedDiv.style.display = "none";
     resultsDiv.innerHTML = "<p>ماكو نتائج مطابقة.</p>";
     return;
   }
 
+  // Show highlighted results
+  if (highlightedDevices.length > 0) {
+    highlightedDiv.style.display = "block";
+    let highlightedHtml = "";
+    highlightedDevices.forEach(device => {
+      highlightedHtml += `<li class="highlighted-item">${device}</li>`;
+    });
+    highlightedList.innerHTML = highlightedHtml;
+  }
+
+  // Show all compatibility groups
+  resultsDiv.style.display = "block";
   let html = "";
   matchedGroups.forEach(group => {
     html += `<div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>`;
-    group.devices.forEach((device, index) => {
-      // نضلل أول جهاز فقط من أول مجموعة تطابق
-      const highlightClass = (matchedGroups.indexOf(group) === 0 && index === 0) ? "highlight" : "";
-      html += `<li class="${highlightClass}">${device}</li>`;
+    group.devices.forEach(device => {
+      html += `<li>${device}</li>`;
     });
     html += `</ul></div>`;
   });
 
   resultsDiv.innerHTML = html;
 }
-
 </script>
-<script src="search.js"></script>
+
 </body>
 </html>
