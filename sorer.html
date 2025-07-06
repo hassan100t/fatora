@@ -2,334 +2,229 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>فاتورة صيانة</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <title>فاتورة صيانة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f5f5f5;
-      padding: 20px;
+    /* نفس التنسيقات السابقة ... */
+    * {
+      box-sizing: border-box;
       margin: 0;
-      color: #000;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 30px;
+      color: #222;
+      position: relative;
+    }
+
+    .background-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .invoice {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      max-width: 900px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      max-width: 800px;
       margin: auto;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     h2 {
       text-align: center;
-      color: #007BFF;
+      margin-bottom: 20px;
+      color: #333;
     }
 
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .form-group {
-      width: 48%;
-      margin-bottom: 15px;
-    }
-
-    .form-group textarea {
-      height: 80px;
-      resize: vertical;
+    .section {
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
-      font-weight: bold;
       margin-bottom: 5px;
+      font-weight: 600;
     }
 
-    input, select, textarea {
+    input, textarea {
       width: 100%;
       padding: 10px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-weight: bold;
-      box-sizing: border-box;
+      border: 1px solid #aaa;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      background: #fdfdfd;
     }
 
-    input::placeholder {
-      color: #aaa;
-      font-weight: normal;
+    textarea {
+      resize: vertical;
+      min-height: 80px;
     }
 
-    #updateTimeDisplay {
-      margin-top: 5px;
-      font-size: 14px;
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-weight: 600;
       color: #555;
-      font-weight: normal;
     }
 
-    .btn-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
+    .buttons {
+      text-align: center;
       margin-top: 20px;
     }
 
-    .btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      background-color: #000;
-      color: white;
+    button {
+      padding: 10px 20px;
+      margin: 5px;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      font-weight: bold;
       cursor: pointer;
     }
-
-    .btn:hover {
-      background-color: #444;
+    
+    .send-btn {
+      background: #25d366; /* لون واتساب */
     }
 
-    @media print {
-      .btn-container {
-        display: none;
+    .telegram-btn {
+      background: #0088cc; /* لون تليجرام */
+    }
+
+    @media (max-width: 600px) {
+      .invoice {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
+  <div class="background-animation"></div>
 
-  <div class="invoice" id="invoice">
-    <h2>نموذج فاتورة صيانة</h2>
+  <div class="invoice">
+    <h2>فاتورة صيانة</h2>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>اسم الزبون:</label>
-        <input type="text" id="customerName">
-      </div>
+    <div class="section">
+      <label>اسم الزبون</label>
+      <input type="text" id="customerName" placeholder="مثال: علي الموسوي" />
+    </div>
 
-      <div class="form-group">
-        <label>اسم الشركة:</label>
-        <input type="text" id="companyInput" list="companyList">
-        <datalist id="companyList">
-          <option value="Samsung">
-          <option value="Apple">
-          <option value="Huawei">
-          <option value="Xiaomi">
-          <option value="Oppo">
-          <option value="Realme">
-          <option value="Infinix">
-          <option value="TECNO">
-          <option value="Nokia">
-          <option value="Lenovo">
-          <option value="Sony">
-        </datalist>
-      </div>
+    <div class="section">
+      <label>رقم الهاتف</label>
+      <input type="text" id="phoneNumber" placeholder="مثال: 0780xxxxxxx" />
+    </div>
 
-      <div class="form-group">
-        <label>رقم الهاتف:</label>
-        <input type="text" id="customerPhone">
-      </div>
+    <div class="section">
+      <label>عنوان الزبون</label>
+      <input type="text" id="customerAddress" placeholder="العنوان الكامل" />
+    </div>
 
-      <div class="form-group">
-        <label>نوع الجهاز:</label>
-        <input type="text" id="deviceInput" list="deviceList">
-        <datalist id="deviceList"></datalist>
-      </div>
+    <div class="section">
+      <label>نوع الجهاز</label>
+      <input type="text" id="deviceType" placeholder="مثال: Samsung A32" />
+    </div>
 
-      <div class="form-group">
-        <label>العنوان:</label>
-        <input type="text" id="customerAddress">
-      </div>
+    <div class="section">
+      <label>الرقم التسلسلي</label>
+      <input type="text" id="serialNumber" placeholder="مثال: SN1234567890" />
+    </div>
 
-      <div class="form-group">
-        <label>نوع العطل:</label>
-        <input type="text" id="faultInput" list="faultList">
-        <datalist id="faultList">
-          <option value="شاشة مكسورة">
-          <option value="بطارية ضعيفة">
-          <option value="مشكلة في الصوت">
-          <option value="شاشة لا تستجيب">
-          <option value="تجميد الجهاز">
-          <option value="كاميرا معطلة">
-          <option value="قلم لا يعمل">
-          <option value="شاشة سوداء">
-          <option value="مشكلة في الشحن">
-          <option value="مشكلة في النظام">
-          <option value="مشكلة في الشبكة">
-          <option value="سخونة الجهاز">
-        </datalist>
-      </div>
+    <div class="section">
+      <label>الضمان</label>
+      <input type="text" id="warranty" placeholder="مثال: 30 يوم" />
+    </div>
 
-      <div class="form-group">
-        <label>الرقم التسلسلي:</label>
-        <input type="text" id="serialNumber">
-      </div>
+    <div class="section">
+      <label>الوقت والتاريخ</label>
+      <input type="datetime-local" id="dateTime" />
+    </div>
 
-      <div class="form-group">
-        <label>السعر:</label>
-        <input type="text" id="price" placeholder="دينار عراقي">
-      </div>
+    <div class="section">
+      <label>الخلل</label>
+      <textarea id="faultDescription" placeholder="وصف الخلل بالجهاز"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label>مدة الضمان:</label>
-        <select id="warrantyPeriod">
-          <option value="موقعي">موقعي</option>
-          <option value="5 أيام">5 أيام</option>
-          <option value="10 أيام">10 أيام</option>
-          <option value="15 يوم">15 يوم</option>
-          <option value="20 يوم">20 يوم</option>
-          <option value="30 يوم">30 يوم</option>
-        </select>
-      </div>
+    <div class="section">
+      <label>الملاحظات</label>
+      <textarea id="notes" placeholder="أي ملاحظات إضافية"></textarea>
+    </div>
 
-      <div class="form-group">
-        <label>التاريخ والوقت:</label>
-        <input type="datetime-local" id="updateTime">
-        <div id="updateTimeDisplay"></div>
-      </div>
+    <div class="buttons">
+      <button onclick="window.print()">🖨️ طباعة</button>
+      <button onclick="savePDF()">💾 حفظ PDF</button>
+      <button class="telegram-btn" onclick="sendTelegram()">📨 إرسال على تليجرام</button>
+      <button class="send-btn" onclick="sendWhatsApp()">📨 إرسال على واتساب</button>
+    </div>
 
-      <div class="form-group" style="width: 100%;">
-        <label>الملاحظات:</label>
-        <textarea id="notes" placeholder="أدخل الملاحظات هنا..."></textarea>
-      </div>
+    <div class="footer">
+      شكراً لزيارتكم - الموسوي للتقنية
     </div>
   </div>
 
-  <div class="btn-container">
-    <button class="btn" onclick="printInvoice()">🖨️ طباعة</button>
-    <button class="btn" onclick="saveAsPDF()">💾 حفظ PDF</button>
-    <button class="btn" onclick="sendToTelegram()">📤 إرسال إلى التليجرام</button>
-    <a href="totel.html" class="btn">📱 توافق الشاشات</a>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
   <script>
-    const models = {
-      Samsung: ["Galaxy S23", "Galaxy A54", "Galaxy Note 20"],
-      Apple: ["iPhone 13", "iPhone 12", "iPhone SE"],
-      Huawei: ["P50 Pro", "Nova 9", "Mate 40"],
-      Xiaomi: ["Redmi Note 11", "Mi 11", "Poco X3"],
-      Oppo: ["Reno 8", "A96", "Find X5"],
-      Realme: ["Realme 9", "GT Neo", "C35"],
-      Infinix: ["Hot 12", "Note 11", "Zero X"],
-      TECNO: ["Camon 19", "Spark 10", "Pova 5"],
-      Nokia: ["Nokia G21", "Nokia X10", "Nokia 5.4"],
-      Lenovo: ["K12", "Legion Duel", "Z6 Pro"],
-      Sony: ["Xperia 1 III", "Xperia 10", "Xperia L4"],
+    // تعبئة الوقت تلقائياً عند تحميل الصفحة
+    window.onload = function() {
+      const now = new Date();
+      const localDatetime = now.toISOString().slice(0,16);
+      document.getElementById('dateTime').value = localDatetime;
     };
 
-    document.getElementById("companyInput").addEventListener("input", function() {
-      const value = this.value;
-      const list = models[value] || [];
-      const deviceList = document.getElementById("deviceList");
-      deviceList.innerHTML = "";
-      list.forEach(model => {
-        const option = document.createElement("option");
-        option.value = model;
-        deviceList.appendChild(option);
-      });
-    });
-
-    const updateTimeInput = document.getElementById('updateTime');
-    const updateTimeDisplay = document.getElementById('updateTimeDisplay');
-
-    updateTimeInput.addEventListener('change', () => {
-      const dt = new Date(updateTimeInput.value);
-      if (!isNaN(dt.getTime())) {
-        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false };
-        updateTimeDisplay.textContent = dt.toLocaleDateString('ar-EG', options);
-      } else {
-        updateTimeDisplay.textContent = '';
-      }
-    });
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const now = new Date();
-      updateTimeInput.value = now.toISOString().slice(0,16);
-      updateTimeInput.dispatchEvent(new Event("change"));
-    });
-
-    function printInvoice() {
-      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
-      const originalTitle = document.title;
-      document.title = serial;
-      window.print();
-      document.title = originalTitle;
+    function savePDF() {
+      window.print(); // مؤقتاً، يمكن تطويره لاحقاً لتصدير PDF فعلي
     }
 
-    function saveAsPDF() {
-      const element = document.getElementById("invoice");
-      const device = document.getElementById("deviceInput").value.trim() || "جهاز";
-      const serial = document.getElementById("serialNumber").value.trim() || "فاتورة";
-      const filename = device + " " + serial + ".pdf";
+    function formatInvoiceText() {
+      const name = document.getElementById('customerName').value.trim();
+      const phone = document.getElementById('phoneNumber').value.trim();
+      const address = document.getElementById('customerAddress').value.trim();
+      const device = document.getElementById('deviceType').value.trim();
+      const serial = document.getElementById('serialNumber').value.trim();
+      const warranty = document.getElementById('warranty').value.trim();
+      const dateTime = document.getElementById('dateTime').value.trim();
+      const fault = document.getElementById('faultDescription').value.trim();
+      const notes = document.getElementById('notes').value.trim();
 
-      const opt = {
-        margin: 0.5,
-        filename: filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      };
-
-      html2pdf().set(opt).from(element).save();
+      return `فاتورة صيانة\n
+اسم الزبون: ${name}
+رقم الهاتف: ${phone}
+العنوان: ${address}
+نوع الجهاز: ${device}
+الرقم التسلسلي: ${serial}
+الضمان: ${warranty}
+الوقت والتاريخ: ${dateTime}
+الخلل: ${fault}
+الملاحظات: ${notes}`;
     }
 
-    function sendToTelegram() {
-      const name = document.getElementById("customerName").value || "غير محدد";
-      const phone = document.getElementById("customerPhone").value || "غير محدد";
-      const company = document.getElementById("companyInput").value || "غير محدد";
-      const device = document.getElementById("deviceInput").value || "غير محدد";
-      const fault = document.getElementById("faultInput").value || "غير محدد";
-      const serial = document.getElementById("serialNumber").value || "غير محدد";
-      const address = document.getElementById("customerAddress").value || "غير محدد";
-      const price = document.getElementById("price").value || "غير محدد";
-      const warranty = document.getElementById("warrantyPeriod").value || "غير محدد";
-      const time = document.getElementById("updateTimeDisplay").textContent || "غير محدد";
-      const notes = document.getElementById("notes").value || "لا توجد ملاحظات";
+    function sendTelegram() {
+      const text = encodeURIComponent(formatInvoiceText());
+      const telegramUrl = `https://t.me/share/url?url=&text=${text}`;
+      window.open(telegramUrl, '_blank');
+    }
 
-      const message = `
-📦 *فاتورة صيانة جديدة:*
-👤 *الاسم:* ${name}
-📞 *الهاتف:* ${phone}
-🏢 *الشركة:* ${company}
-📱 *الجهاز:* ${device}
-🔧 *العطل:* ${fault}
-🔢 *الرقم التسلسلي:* ${serial}
-📍 *العنوان:* ${address}
-💰 *السعر:* ${price}
-🛡 *الضمان:* ${warranty}
-⏰ *الوقت:* ${time}
-📝 *ملاحظات:* ${notes}
-      `;
-
-      const token = "YOUR_BOT_TOKEN"; // ← غيّره بالتوكن
-      const chatId = "YOUR_CHAT_ID";  // ← غيّره بآيدي التليجرام
-
-      const url = `https://api.telegram.org/bot${token}/sendMessage`;
-
-      fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: message,
-          parse_mode: "Markdown"
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        alert("✅ تم إرسال الفاتورة إلى التليجرام");
-      })
-      .catch(err => {
-        alert("❌ فشل الإرسال إلى التليجرام");
-        console.error("Telegram Error:", err);
-      });
+    function sendWhatsApp() {
+      const text = encodeURIComponent(formatInvoiceText());
+      const whatsappUrl = `https://wa.me/?text=${text}`;
+      window.open(whatsappUrl, '_blank');
     }
   </script>
 </body>
