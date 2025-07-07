@@ -20,7 +20,6 @@
       overflow-x: hidden;
     }
 
-    /* خلفية متحركة */
     .background-animation {
       position: fixed;
       top: 0;
@@ -39,7 +38,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* العنوان الرئيسي */
     header {
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(10px);
@@ -80,7 +78,6 @@
       to { transform: scale(1.05); }
     }
 
-    /* عداد الزوار */
     .visitor-counter {
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(10px);
@@ -117,7 +114,6 @@
       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     }
 
-    /* الحاوي الرئيسي */
     .container {
       max-width: 1200px;
       margin: 40px auto;
@@ -156,7 +152,6 @@
       font-weight: 300;
     }
 
-    /* البطاقات */
     .cards {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -183,6 +178,7 @@
     .card:nth-child(1) { animation-delay: 0.2s; }
     .card:nth-child(2) { animation-delay: 0.4s; }
     .card:nth-child(3) { animation-delay: 0.6s; }
+    .card:nth-child(4) { animation-delay: 0.8s; }
 
     @keyframes cardSlideIn {
       from {
@@ -280,7 +276,6 @@
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     }
 
-    /* التحسينات للهواتف */
     @media (max-width: 768px) {
       header h1 {
         font-size: 2rem;
@@ -300,7 +295,6 @@
       }
     }
 
-    /* Footer محسن */
     footer {
       background: rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(10px);
@@ -312,7 +306,6 @@
       border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* جسيمات متحركة */
     .particles {
       position: fixed;
       top: 0;
@@ -350,8 +343,6 @@
 </head>
 <body>
   <div class="background-animation"></div>
-  
-  <!-- جسيمات متحركة -->
   <div class="particles" id="particles"></div>
 
   <header>
@@ -370,17 +361,15 @@
     </div>
 
     <div class="cards">
-      <!-- بطاقة فاتورة المبيعات -->
-      <div class="card" onclick="window.location.href='FATORA.html'">
+      <div class="card" onclick="window.location.href='mabeet.html'">
         <div class="card-icon">
           <i class="fas fa-file-invoice-dollar"></i>
         </div>
-        <h3>نظام الفواتير الإلكترونية</h3>
-        <p>نظام متكامل لإدارة فواتير المبيعات مع حساب تلقائي للإجماليات والمبالغ المستحقة والمتبقية</p>
+        <h3>نظام مبيعات الإلكترونية</h3>
+        <p>نظام متكامل لإدارةالمبيعات والمشتريات واداره النخزن والزبائن تلقائي</p>
         <span class="btn">عرض النظام <i class="fas fa-arrow-left"></i></span>
       </div>
 
-      <!-- بطاقة ضمان الصيانة -->
       <div class="card" onclick="window.location.href='sorer.html'">
         <div class="card-icon">
           <i class="fas fa-tools"></i>
@@ -390,7 +379,6 @@
         <span class="btn">دخول النظام <i class="fas fa-arrow-left"></i></span>
       </div>
 
-      <!-- بطاقة توافق الشاشات -->
       <div class="card" onclick="window.location.href='totel.html'">
         <div class="card-icon">
           <i class="fas fa-mobile-alt"></i>
@@ -398,6 +386,16 @@
         <h3>دليل توافق الشاشات</h3>
         <p>قاعدة بيانات شاملة لتوافق شاشات الهواتف الذكية مع إمكانية البحث السريع والدقيق</p>
         <span class="btn">استكشف الدليل <i class="fas fa-arrow-left"></i></span>
+      </div>
+
+      <!-- المربع الرابع -->
+      <div class="card" onclick="window.location.href='FATORA.html'">
+        <div class="card-icon">
+          <i class="fas fa-file-invoice-dollar"></i>
+        </div>
+        <h3>فاتورة  مبيعات</h3>
+        <p>نظام متكامل لإدارة فواتير المبيعات مع حساب تلقائي للإجماليات والمبالغ المستحقة والمتبقية</p>
+        <span class="btn">عرض النظام <i class="fas fa-arrow-left"></i></span>
       </div>
     </div>
   </div>
@@ -409,7 +407,6 @@
   </footer>
 
   <script>
-    // إنشاء الجسيمات المتحركة
     function createParticles() {
       const particlesContainer = document.getElementById('particles');
       
@@ -428,7 +425,6 @@
       }
     }
 
-    // عداد الزوار المتحرك
     function animateVisitorCounter() {
       const counter = document.getElementById('visitorCount');
       const targetValue = 1247;
@@ -448,13 +444,11 @@
       setTimeout(updateCounter, 500);
     }
 
-    // تشغيل التأثيرات عند تحميل الصفحة
     window.addEventListener('load', () => {
       createParticles();
       animateVisitorCounter();
     });
 
-    // تأثير التمرير للبطاقات
     const cards = document.querySelectorAll('.card');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
