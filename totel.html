@@ -1,3 +1,4 @@
+سجل صيانة المحل, [16/12/2025 02:13 ص]
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -141,6 +142,7 @@
   <small>الموقع غير مسؤول عن أي ضرر مباشر أو غير مباشر ناتج عن استخدام المحتوى أو الاعتماد عليه</small>
 </footer>
 
+سجل صيانة المحل, [16/12/2025 02:13 ص]
 <script>
 const compatibilityGroups = [
   {
@@ -277,7 +279,9 @@ const compatibilityGroups = [
       "SMART 4 PLES          (X680D)"
     ]
   },
-  {
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+{
     devices: [
       "INFINIX SMART 8           (5625)",
       "INFINIX SMART 8 HD        (6525)",
@@ -412,7 +416,9 @@ const compatibilityGroups = [
       "Vivo Y97        (V1813A)",
       "Vivo V11        (1804)",
       "Vivo V11i       (1806)",
-      "Vivo Z3         (V1813BT, V1813BA)",
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+"Vivo Z3         (V1813BT, V1813BA)",
       "vivo Z3i        (X)" 
     ]
   },
@@ -525,7 +531,7 @@ const compatibilityGroups = [
       "VICO Y32           (V2158A) ",
       "VIVO Y025          (X)",
       "VIVO Y1            (PD2014F)",
-      "VIVO Y16           (	V2204 .V2214)"
+      "VIVO Y16           (  V2204 .V2214)"
     ]
   },
   {
@@ -582,7 +588,9 @@ const compatibilityGroups = [
   },
   {
     devices:[
-    "VIVO Y66              (Year)",
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+"VIVO Y66              (Year)",
     "VIVO 65               (1719)",
     "VIVO V5 LITE          (1609)",
     
@@ -600,7 +608,7 @@ const compatibilityGroups = [
   },
   {
     devices:[
-    "HONOR MAGIC 5 Lite       (RMO-NX1, RMO-NX3	PGT-AN00, PGT-N09)",
+    "HONOR MAGIC 5 Lite       (RMO-NX1, RMO-NX3  PGT-AN00, PGT-N09)",
      "Honor X40               (RMO-AN00)",
     "Honor X9A 2023           (RMO-NX1)"
     ]
@@ -743,7 +751,9 @@ const compatibilityGroups = [
  },
  {
   devices:[
-  "HUAWEI MATE 10 Lite  (L01, L02, L03, L21, L22, L23)",
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+"HUAWEI MATE 10 Lite  (L01, L02, L03, L21, L22, L23)",
   "HUAWEI Nova 2i       (RNE-L22)",
   "HUAWEI Maimang 6     (RNE-AL00)",
   ]
@@ -914,7 +924,9 @@ const compatibilityGroups = [
   "HUAWEI Y7 Prime         (TRT-L53, TRT-L21A, TRT-AL00, SLA-TL10, TRT-TL10, SLA-AL00, TRT-AL00A)" ,
   "HUAWEI Nova Lite Plus   (TRT-LX1)" ,
   " HUAWEI Y7 2017        ( TRT-L21A, TRT-LX1, and TRT-LX3)",
-  "HUAWEI Enjoy 7 Plus    (TRT-AL00, TRT-AL00A, and TRT-LX1)",
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+"HUAWEI Enjoy 7 Plus    (TRT-AL00, TRT-AL00A, and TRT-LX1)",
   ]
  },
  {
@@ -1082,6 +1094,7 @@ devices:[
 },
 {
 
+سجل صيانة المحل, [16/12/2025 02:13 ص]
 devices:[
 "OPPO A55            (CPH2325) ",
 "OPPO A54            (CPH2239)",
@@ -1230,7 +1243,9 @@ devices:[
   "Realme 9            (RMX3521)",
   "OPPO 9 PRO Plus     (RMX3392, RMX3393)" ,
   "Realme 10 4G        (RMX3630)" ,
-  "Realme Narzo 50 Pro (RMX3395, RMX3396) ",
+
+سجل صيانة المحل, [16/12/2025 02:13 ص]
+"Realme Narzo 50 Pro (RMX3395, RMX3396) ",
   "Oppo F21 Pro        (CPH2363, CPH2461)"
   ]
 },
@@ -1358,7 +1373,7 @@ function searchCompatibility() {
     highlightedDiv.style.display = "block";
     let highlightedHtml = "";
     highlightedDevices.forEach(device => {
-      highlightedHtml += `<li class="highlighted-item">${device}</li>`;
+      highlightedHtml += <li class="highlighted-item">${device}</li>;
     });
     highlightedList.innerHTML = highlightedHtml;
   }
@@ -1367,11 +1382,11 @@ function searchCompatibility() {
   resultsDiv.style.display = "block";
   let html = "";
   matchedGroups.forEach(group => {
-    html += `<div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>`;
+    html += <div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>;
     group.devices.forEach(device => {
-      html += `<li>${device}</li>`;
+      html += <li>${device}</li>;
     });
-    html += `</ul></div>`;
+    html += </ul></div>;
   });
 
   resultsDiv.innerHTML = html;
