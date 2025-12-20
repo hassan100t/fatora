@@ -1,4 +1,3 @@
-سجل صيانة المحل, [16/12/2025 02:13 ص]
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -126,7 +125,7 @@
 <body>
 
 <div class="search-container">
-  <h1 style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #333;"></h1>
+  <h1 style="text-align: center; font-weight: bold; margin-bottom: 20px; color: #333;">البحث عن توافق الشاشات</h1>
   <input type="text" id="searchInput" placeholder="اكتب اسـم أو رقم الموديل الهاتــف بل الكامـــل" oninput="searchCompatibility()" autocomplete="off"/>
 </div>
 
@@ -142,7 +141,6 @@
   <small>الموقع غير مسؤول عن أي ضرر مباشر أو غير مباشر ناتج عن استخدام المحتوى أو الاعتماد عليه</small>
 </footer>
 
-سجل صيانة المحل, [16/12/2025 02:13 ص]
 <script>
 const compatibilityGroups = [
   {
@@ -279,9 +277,7 @@ const compatibilityGroups = [
       "SMART 4 PLES          (X680D)"
     ]
   },
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-{
+  {
     devices: [
       "INFINIX SMART 8           (5625)",
       "INFINIX SMART 8 HD        (6525)",
@@ -416,9 +412,7 @@ const compatibilityGroups = [
       "Vivo Y97        (V1813A)",
       "Vivo V11        (1804)",
       "Vivo V11i       (1806)",
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-"Vivo Z3         (V1813BT, V1813BA)",
+      "Vivo Z3         (V1813BT, V1813BA)",
       "vivo Z3i        (X)" 
     ]
   },
@@ -588,12 +582,9 @@ const compatibilityGroups = [
   },
   {
     devices:[
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-"VIVO Y66              (Year)",
-    "VIVO 65               (1719)",
-    "VIVO V5 LITE          (1609)",
-    
+      "VIVO Y66              (Year)",
+      "VIVO 65               (1719)",
+      "VIVO V5 LITE          (1609)"
     ]
   },
   {
@@ -751,9 +742,7 @@ const compatibilityGroups = [
  },
  {
   devices:[
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-"HUAWEI MATE 10 Lite  (L01, L02, L03, L21, L22, L23)",
+  "HUAWEI MATE 10 Lite  (L01, L02, L03, L21, L22, L23)",
   "HUAWEI Nova 2i       (RNE-L22)",
   "HUAWEI Maimang 6     (RNE-AL00)",
   ]
@@ -924,9 +913,7 @@ const compatibilityGroups = [
   "HUAWEI Y7 Prime         (TRT-L53, TRT-L21A, TRT-AL00, SLA-TL10, TRT-TL10, SLA-AL00, TRT-AL00A)" ,
   "HUAWEI Nova Lite Plus   (TRT-LX1)" ,
   " HUAWEI Y7 2017        ( TRT-L21A, TRT-LX1, and TRT-LX3)",
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-"HUAWEI Enjoy 7 Plus    (TRT-AL00, TRT-AL00A, and TRT-LX1)",
+  "HUAWEI Enjoy 7 Plus    (TRT-AL00, TRT-AL00A, and TRT-LX1)",
   ]
  },
  {
@@ -1093,8 +1080,6 @@ devices:[
   ]
 },
 {
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
 devices:[
 "OPPO A55            (CPH2325) ",
 "OPPO A54            (CPH2239)",
@@ -1243,9 +1228,7 @@ devices:[
   "Realme 9            (RMX3521)",
   "OPPO 9 PRO Plus     (RMX3392, RMX3393)" ,
   "Realme 10 4G        (RMX3630)" ,
-
-سجل صيانة المحل, [16/12/2025 02:13 ص]
-"Realme Narzo 50 Pro (RMX3395, RMX3396) ",
+  "Realme Narzo 50 Pro (RMX3395, RMX3396) ",
   "Oppo F21 Pro        (CPH2363, CPH2461)"
   ]
 },
@@ -1328,7 +1311,7 @@ devices:[
   "Realme 11 5G     (RMX3780)" ,
   "Realme 11x 5G    (RMX3785)",
   "Realme Narzo N55  ()"
-  / Realme K11x / OPPO A58 4G /OPPO A79 5G / OPPO A98 5G / OPPO F23 5G / Nord N30 / Nord 60x // OPPO V50/ OPPO V50s
+  // Realme K11x / OPPO A58 4G /OPPO A79 5G / OPPO A98 5G / OPPO F23 5G / Nord N30 / Nord 60x // OPPO V50/ OPPO V50s
   ]
 }
 ];
@@ -1373,7 +1356,7 @@ function searchCompatibility() {
     highlightedDiv.style.display = "block";
     let highlightedHtml = "";
     highlightedDevices.forEach(device => {
-      highlightedHtml += <li class="highlighted-item">${device}</li>;
+      highlightedHtml += `<li class="highlighted-item">${device}</li>`;
     });
     highlightedList.innerHTML = highlightedHtml;
   }
@@ -1382,11 +1365,11 @@ function searchCompatibility() {
   resultsDiv.style.display = "block";
   let html = "";
   matchedGroups.forEach(group => {
-    html += <div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>;
+    html += `<div class="group"><h3>شاشات الأجهزة المتوافقة:</h3><ul>`;
     group.devices.forEach(device => {
-      html += <li>${device}</li>;
+      html += `<li>${device}</li>`;
     });
-    html += </ul></div>;
+    html += `</ul></div>`;
   });
 
   resultsDiv.innerHTML = html;
